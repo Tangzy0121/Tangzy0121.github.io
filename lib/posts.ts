@@ -1,4 +1,4 @@
-export type PostSection = { heading?: string; paragraphs: string[]; quote?: string };
+export type PostSection = { id?: string; heading?: string; paragraphs: string[]; quote?: string };
 export type Post = {
   slug: string;
   title: string;
@@ -6,6 +6,7 @@ export type Post = {
   date: string;
   readingTime: string;
   category: string;
+  tags: string[];
   sections: PostSection[];
 };
 
@@ -17,6 +18,7 @@ export const posts: Post[] = [
     date: "Aug 26, 2026",
     readingTime: "2 min read",
     category: "Notes",
+    tags: ["Learning", "Meta"],
     sections: [
       {
         paragraphs: [
@@ -26,6 +28,7 @@ export const posts: Post[] = [
         quote: "Real learning → real accumulation → systematic notes → something worth sharing.",
       },
       {
+        id: "what-will-appear-here",
         heading: "What will appear here",
         paragraphs: [
           "Most entries will begin with problems I have actually encountered. Some may become polished explanations; others will stay as concise field notes.",
@@ -37,3 +40,6 @@ export const posts: Post[] = [
 ];
 
 export function getPost(slug: string) { return posts.find((post) => post.slug === slug); }
+
+export const categories = Array.from(new Set(posts.map((post) => post.category))).sort();
+export const tags = Array.from(new Set(posts.flatMap((post) => post.tags))).sort();

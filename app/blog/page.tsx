@@ -9,22 +9,19 @@ export default function BlogPage() {
   return (
     <SiteShell>
       <header className="page-header">
-        <p className="eyebrow">Notebook</p>
+        <p className="eyebrow">Notes</p>
         <h1 className="page-title">Things worth writing down.</h1>
         <p className="page-intro">
           Programming contests, course notes, and occasional reflections—kept
           here after I have formed my own understanding.
         </p>
       </header>
-      <section className="post-list" aria-label="Blog posts">
+      <section className="index-list notebook-index" aria-label="Blog posts">
         {posts.map((post, index) => (
-          <Link className="post-card" href={`/blog/${post.slug}`} key={post.slug}>
-            <div>
-              <p className="post-meta">{post.date} · {post.category}</p>
-              <h3>{post.title}</h3>
-              <p>{post.description}</p>
-            </div>
-            <span className="post-index">{String(index + 1).padStart(3, "0")}</span>
+          <Link className="index-row" href={`/blog/${post.slug}`} key={post.slug}>
+            <time>{post.date}</time>
+            <div><h3>{post.title}</h3><p>{post.description}</p></div>
+            <span>{String(index + 1).padStart(3, "0")}</span>
           </Link>
         ))}
       </section>

@@ -9,10 +9,12 @@ npm install
 npm run dev
 ```
 
-The first edition contains:
+The current edition contains:
 
 - a personal home page;
-- a notebook index and article page;
+- a compact notebook index and article pages with a table of contents;
+- category, tag, and archive views;
+- IBM Plex typography and a Carbon-inspired technical reading system;
 - an intentionally quiet projects page;
 - a short about page.
 
