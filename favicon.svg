@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#181818" />
-  <text x="13" y="43" font-family="ui-monospace, monospace" font-size="28" fill="#FAFAF8">&gt;_</text>
+  <rect width="64" height="64" rx="14" fill="#15181d" />
+  <path d="M16 17 L33 32 L16 47" fill="none" stroke="#5669e8" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M39 47 L56 47" fill="none" stroke="#5669e8" stroke-width="7.5" stroke-linecap="round" />
 </svg>
