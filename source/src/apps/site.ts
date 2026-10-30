@@ -30,7 +30,7 @@ export const github = external('github', 'Open GitHub profile');
 export const scholar = external('scholar', 'Open Google Scholar');
 
 /** Commands that must not auto-run from a shared link (popups, clipboard, state changes). */
-export const NO_DEEPLINK = new Set(['github', 'scholar', 'email', 'exit', 'clear', 'theme', 'share', 'history', 'paper', 'showcase']);
+export const NO_DEEPLINK = new Set(['github', 'scholar', 'email', 'exit', 'clear', 'theme', 'share', 'history', 'paper', 'showcase', 'certs']);
 
 export const share: Command = {
   name: 'share', desc: 'Copy a link to this page or a command', group: 'Navigation',
@@ -48,6 +48,17 @@ export const showcase: Command = {
     const i = n == null ? undefined : Number.parseInt(n, 10) - 1;
     if (!ctx.openShowcase || (i !== undefined && Number.isNaN(i)) || !ctx.openShowcase(i)) return ctx.print(`showcase: no project ${n} · try projects`, 'error');
     ctx.print('Opening showcase… (esc to close)', 'muted');
+  },
+};
+
+export const certs: Command = {
+  name: 'certs', desc: 'View award certificates (certs 1 = newest)', group: 'Navigation',
+  run([n], ctx) {
+    const open = (window as unknown as { __openCerts?: (i?: number) => boolean }).__openCerts;
+    const k = n == null ? undefined : Number.parseInt(n, 10);
+    const i = k === undefined ? undefined : 26 - k;
+    if (!open || (k !== undefined && (Number.isNaN(k) || k < 1 || k > 26)) || !open(i)) return ctx.print(`certs: no certificate ${n} · try awards`, 'error');
+    ctx.print('Opening certificates… (esc to close)', 'muted');
   },
 };
 
