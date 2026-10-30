@@ -42,7 +42,8 @@ export function inline(s: string, run: (cmd: string) => void): ReactNode[] {
     if (url.startsWith('cmd:')) out.push(<button key={i} className="term-link" onClick={() => run(url.slice(4))}>{label}</button>);
     else if (url.startsWith('mailto:'))
       out.push(<span key={i}><span className="select-all">{url.slice(7)}</span> <CopyButton text={url.slice(7)} /></span>);
-    else out.push(<a key={i} href={url} target={url.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="term-link">{label}</a>);
+    else out.push(<a key={i} href={url} target={url.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="term-link"
+      download={/\.pdf$/i.test(url) && !url.startsWith('http') ? '' : undefined} onClick={(e) => e.stopPropagation()}>{label}</a>);
   }
   return out;
 }
