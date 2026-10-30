@@ -22,7 +22,7 @@ test('ctrl-r reverse search', () => {
   assert.equal(reverseSearch(H, 'zzz', H.length), -1);
 });
 test('word motion, transpose, paste', () => {
-  const s = 'cat projects/safece';
+  const s = 'cat research/safece';
   assert.equal(wordLeft(s, s.length), 13);
   assert.equal(wordLeft(s, 13), 4);
   assert.equal(wordRight(s, 0), 3);
@@ -32,7 +32,7 @@ test('word motion, transpose, paste', () => {
 });
 test('menu candidate replaces the current word', () => {
   assert.equal(applyCandidate('g', 'github'), 'github ');
-  assert.equal(applyCandidate('cat projects/', 'safece/'), 'cat projects/safece/');
+  assert.equal(applyCandidate('cat research/', 'safece/'), 'cat research/safece/');
   assert.equal(applyCandidate('cat pro', 'projects/'), 'cat projects/');
   assert.equal(applyCandidate('goo', 'google scholar'), 'google scholar ');
 });

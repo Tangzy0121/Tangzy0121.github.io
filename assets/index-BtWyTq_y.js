@@ -75,48 +75,62 @@ Location Harbin, China
 
 [▦ open showcase](cmd:showcase) · visual cards with demos (esc to close)
 
-[01]  [Asimov Cascade](cmd:cat ~/projects/asimov-cascade/README.md)
-     AI Safety / Robotics / System Safety
-     Detecting cascading safety failures across interacting humanoid robotic subsystems.
-     Status: ICRA 2027 · Under Review
+Career-facing personal projects. Research work lives in [research](cmd:research).
 
-[02]  [SafeCE](cmd:cat ~/projects/safece/README.md)
-     Database Systems / Cardinality Estimation / Risk Calibration
-     Risk-aware evaluation and upper-tail calibration for cardinality estimation.
-     Status: In preparation
-
-[03]  [Anyscale-DBCO](cmd:cat ~/projects/anyscale-dbco/README.md)
-     ML4CO / Database Systems / Combinatorial Optimization
-     Scaling combinatorial optimization through decomposition, solver routing and composition.
-     Status: Ongoing
-
-## Personal projects
-
-[04]  [Folio](https://github.com/Tangzy0121/Folio)  [▦ demo](cmd:showcase 4)
+[01]  [Folio](https://github.com/Tangzy0121/Folio)  [▦ demo](cmd:showcase 1)
      Android / Kotlin
      Local-first, privacy-friendly reader for Markdown, HTML and zipped web pages. No account, no cloud, no tracking.
 
-[05]  Loci  [▦ demo](cmd:showcase 5)
+[02]  Loci  [▦ demo](cmd:showcase 2)
      App / TypeScript
      A personal learning agent that turns study material into readable, verifiable, traceable learning projects.
      Status: In progress (source private) · [privacy policy](https://tangzy0121.github.io/loci-privacy/)
 
-[06]  [MewCode](https://github.com/Tangzy0121/mewcode-go)  [▦ demo](cmd:showcase 6)
+[03]  [MewCode](https://github.com/Tangzy0121/mewcode-go)  [▦ demo](cmd:showcase 3)
      Go / AI Coding Agent
      A terminal AI coding agent built from scratch in Go: agent loop, tool calling, permission gating, streaming TUI.
      Status: v1.0 in progress · earlier skeleton: [mewcode-v0](https://github.com/Tangzy0121/mewcode-v0)
 
-[07]  [tangzy-btw](https://github.com/Tangzy0121/tangzy-btw)  [▦ demo](cmd:showcase 7)
+[04]  [tangzy-btw](https://github.com/Tangzy0121/tangzy-btw)  [▦ demo](cmd:showcase 4)
      TypeScript / pi extension
      KimiCode-style /btw side questions for pi: bottom overlay panel, markdown streaming, in-panel follow-ups.
 
-[08]  [clawd-roxy-theme](https://github.com/Tangzy0121/clawd-roxy-theme)  [▦ demo](cmd:showcase 8)
+[05]  [clawd-roxy-theme](https://github.com/Tangzy0121/clawd-roxy-theme)  [▦ demo](cmd:showcase 5)
      Desktop pet theme
      Chibi Roxy theme for Clawd on Desk, with APNG animations for idle, thinking, working and sleeping.
 
-[09]  [Market Survey Awards](https://tangzy0121.github.io/market-survey-awards/)  [▦ demo](cmd:showcase 9)
+[06]  [Market Survey Awards](https://tangzy0121.github.io/market-survey-awards/)  [▦ demo](cmd:showcase 6)
      Web / Reading site
-     Reading pages for 2024–2026 market survey competition winning papers, appendices and defense videos. [source](https://github.com/Tangzy0121/market-survey-awards)`,"anyscale-dbco":{"README.md":`# Anyscale-DBCO
+     Reading pages for 2024–2026 market survey competition winning papers, appendices and defense videos. [source](https://github.com/Tangzy0121/market-survey-awards)`},publications:{"README.md":`# Publications
+
+Select a paper: read opens the PDF viewer (esc to close), download saves the PDF.
+
+1. Asimov Cascade Monitoring in Humanoid Robotics: An Evidence-Gated Technology Management Framework with Quantification
+   Anonymous submission (double-blind review copy)
+   ICRA 2027 · Under Review
+   Manuscript under review · anonymized version.
+   [▣ read](cmd:paper 1) · [⤓ download PDF](./papers/asimov-cascade-anon.pdf)`},research:{"README.md":`# Research
+
+Research projects: [Asimov Cascade](cmd:cat ~/research/asimov-cascade/README.md) (ICRA 2027 · Under Review) · [SafeCE](cmd:cat ~/research/safece/README.md) (In preparation) · [Anyscale-DBCO](cmd:cat ~/research/anyscale-dbco/README.md) (Ongoing) · papers: [papers](cmd:papers)
+
+01  Database Systems
+    I study how learned components change query processing, with an emphasis on cardinality estimation and its failure modes. The direction covers risk-aware evaluation, upper-tail calibration, and robust query optimization.
+    Topics: SafeCE, Cardinality Estimation, Query Optimization
+    Project: [SafeCE](cmd:cat ~/research/safece/README.md)
+
+02  ML for Combinatorial Optimization
+    I work on scaling combinatorial optimization for database problems through decomposition and solver routing. The focus is on reliable pipelines that combine exact, heuristic, and learned solvers instead of replacing them.
+    Topics: Scaling, Decomposition, Solver Routing
+    Project: [Anyscale-DBCO](cmd:cat ~/research/anyscale-dbco/README.md)
+
+03  AI Safety & Robotics
+    I study how safety failures propagate in systems of interacting agents and robotic subsystems. The work combines cascade modeling, large-scale simulation, and early-warning detection of system-level incidents.
+    Topics: Asimov Cascade, Agent Safety
+    Project: [Asimov Cascade](cmd:cat ~/research/asimov-cascade/README.md)
+
+04  Scientific Machine Learning
+    I am interested in operator learning and physics-informed models for scientific computing. This includes neural operators and their use as fast, differentiable surrogates inside simulation and optimization pipelines.
+    Topics: PINNs, DeepONet, FNO, Operator Learning`,"anyscale-dbco":{"README.md":`# Anyscale-DBCO
 
 ML4CO · Database Systems · Combinatorial Optimization
 Status: Ongoing
@@ -220,34 +234,7 @@ I designed the benchmark and the evaluation framework, and ran the full experime
 - Metric and framework design
 - Experiment pipeline
 - Data analysis
-- Manuscript drafting`}},publications:{"README.md":`# Publications
-
-Select a paper: read opens the PDF viewer (esc to close), download saves the PDF.
-
-1. Asimov Cascade Monitoring in Humanoid Robotics: An Evidence-Gated Technology Management Framework with Quantification
-   Anonymous submission (double-blind review copy)
-   ICRA 2027 · Under Review
-   Manuscript under review · anonymized version.
-   [▣ read](cmd:paper 1) · [⤓ download PDF](./papers/asimov-cascade-anon.pdf)`},research:{"README.md":`# Research
-
-01  Database Systems
-    I study how learned components change query processing, with an emphasis on cardinality estimation and its failure modes. The direction covers risk-aware evaluation, upper-tail calibration, and robust query optimization.
-    Topics: SafeCE, Cardinality Estimation, Query Optimization
-    Project: [SafeCE](cmd:cat ~/projects/safece/README.md)
-
-02  ML for Combinatorial Optimization
-    I work on scaling combinatorial optimization for database problems through decomposition and solver routing. The focus is on reliable pipelines that combine exact, heuristic, and learned solvers instead of replacing them.
-    Topics: Scaling, Decomposition, Solver Routing
-    Project: [Anyscale-DBCO](cmd:cat ~/projects/anyscale-dbco/README.md)
-
-03  AI Safety & Robotics
-    I study how safety failures propagate in systems of interacting agents and robotic subsystems. The work combines cascade modeling, large-scale simulation, and early-warning detection of system-level incidents.
-    Topics: Asimov Cascade, Agent Safety
-    Project: [Asimov Cascade](cmd:cat ~/projects/asimov-cascade/README.md)
-
-04  Scientific Machine Learning
-    I am interested in operator learning and physics-informed models for scientific computing. This includes neural operators and their use as fast, differentiable surrogates inside simulation and optimization pipelines.
-    Topics: PINNs, DeepONet, FNO, Operator Learning`}},oh={name:"cv",desc:"Open CV",group:"Navigation",run(e,t){t.print("Opening ~/cv.pdf in viewer… (esc to close)","muted"),t.openCV()}},sh={name:"email",desc:"Show & copy email",group:"Navigation",run(e,t){t.print(`Email: ${U.email}`),t.copy(U.email).then(n=>n&&t.print("copied to clipboard ✓","muted"))}};function cf(e,t){const n=U.links[e];return{name:e,desc:t,group:"Navigation",run(r,l){l.print(`Opening ${n.label} → ${n.url}`,"muted"),l.openUrl(n.url)}}}const uh=cf("github","Open GitHub profile"),ah=cf("scholar","Open Google Scholar"),ch=new Set(["github","scholar","email","exit","clear","theme","share","history","paper","showcase"]),fh={name:"share",desc:"Copy a link to this page or a command",group:"Navigation",run(e,t){const n=e.join(" ")||t.route||"",r=`${location.origin}${location.pathname}${n?`#${encodeURIComponent(n)}`:""}`;t.print(r,"link"),t.copy(r).then(l=>l&&t.print("link copied ✓","muted"))}},dh={name:"showcase",desc:"Open the projects showcase (showcase 4 = project 4)",group:"Navigation",run([e],t){const n=e==null?void 0:Number.parseInt(e,10)-1;if(!t.openShowcase||n!==void 0&&Number.isNaN(n)||!t.openShowcase(n))return t.print(`showcase: no project ${e} · try projects`,"error");t.print("Opening showcase… (esc to close)","muted")}},ph={name:"paper",desc:"Open a paper in the PDF viewer (paper 1)",group:"Navigation",run([e="1"],t){const n=Number.parseInt(e,10)-1;if(!t.openPaper||Number.isNaN(n)||!t.openPaper(n))return t.print(`paper: no paper ${e} · try papers`,"error");t.print(`Opening paper ${n+1} in viewer… (esc to close)`,"muted")}};function hh(e){const t=[];let n="",r=null;for(const l of e)r?(l===r&&(r=null),n+=l):l==='"'||l==="'"?(r=l,n+=l):l==="|"?(t.push(n),n=""):n+=l;return t.push(n),t.map(l=>l.trim())}function mh(e){const t=[];let n="",r=null,l=!1;for(const i of e)r?i===r?r=null:n+=i:i==='"'||i==="'"?(r=i,l=!0):/\s/.test(i)?((n!==""||l)&&t.push(n),n="",l=!1):n+=i;return(n!==""||l)&&t.push(n),t}function gh(e,t,n,r={}){var s,u;const l=e.trim().toLowerCase().replace(/\s+/g," ");r[l]&&(e=r[l]);const i=hh(e);let o;for(let a=0;a<i.length;a++){const m=mh(i[a]);if(m.length===0)return n.print("syntax error: empty command in pipeline","error");const[h,...g]=m,E=t.get(h)??t.get(h.replace(/^(\/|~\/)?bin\//,""));if(!E&&g.length===0&&i.length===1&&(h==="-"||((s=be(n.fs,n.cwd,h))==null?void 0:s.node.type)==="dir"))return t.get("cd").run([h],{...n,stdin:o});if(!E){n.print(`command not found: ${h}`,"error");const w=af(h,[...t.names(),...Object.keys(r)]);if(!w.length)return n.print("type `help` to see what this shell can do · 输入 help 查看全部命令","muted");const F=[...i.slice(0,a),[w[0],...g].join(" "),...i.slice(a+1)].join(" | ");return(u=n.suggest)==null||u.call(n,F),n.print(w.length===1?`OK, you could try: \`${w[0]}\` — press Tab or → to accept · 你是不是想输入 ${w[0]}？`:`Maybe you want: ${w.map(f=>`\`${f}\``).join(", ")} — Tab or → takes \`${w[0]}\``,"warning")}if(a===i.length-1)return E.run(g,{...n,stdin:o});const S=[];E.run(g,{...n,stdin:o,tty:!1,print:w=>void S.push(...w.split(`
+- Manuscript drafting`}}},oh={name:"cv",desc:"Open CV",group:"Navigation",run(e,t){t.print("Opening ~/cv.pdf in viewer… (esc to close)","muted"),t.openCV()}},sh={name:"email",desc:"Show & copy email",group:"Navigation",run(e,t){t.print(`Email: ${U.email}`),t.copy(U.email).then(n=>n&&t.print("copied to clipboard ✓","muted"))}};function cf(e,t){const n=U.links[e];return{name:e,desc:t,group:"Navigation",run(r,l){l.print(`Opening ${n.label} → ${n.url}`,"muted"),l.openUrl(n.url)}}}const uh=cf("github","Open GitHub profile"),ah=cf("scholar","Open Google Scholar"),ch=new Set(["github","scholar","email","exit","clear","theme","share","history","paper","showcase"]),fh={name:"share",desc:"Copy a link to this page or a command",group:"Navigation",run(e,t){const n=e.join(" ")||t.route||"",r=`${location.origin}${location.pathname}${n?`#${encodeURIComponent(n)}`:""}`;t.print(r,"link"),t.copy(r).then(l=>l&&t.print("link copied ✓","muted"))}},dh={name:"showcase",desc:"Open the projects showcase (showcase 1 = project 1)",group:"Navigation",run([e],t){const n=e==null?void 0:Number.parseInt(e,10)-1;if(!t.openShowcase||n!==void 0&&Number.isNaN(n)||!t.openShowcase(n))return t.print(`showcase: no project ${e} · try projects`,"error");t.print("Opening showcase… (esc to close)","muted")}},ph={name:"paper",desc:"Open a paper in the PDF viewer (paper 1)",group:"Navigation",run([e="1"],t){const n=Number.parseInt(e,10)-1;if(!t.openPaper||Number.isNaN(n)||!t.openPaper(n))return t.print(`paper: no paper ${e} · try papers`,"error");t.print(`Opening paper ${n+1} in viewer… (esc to close)`,"muted")}};function hh(e){const t=[];let n="",r=null;for(const l of e)r?(l===r&&(r=null),n+=l):l==='"'||l==="'"?(r=l,n+=l):l==="|"?(t.push(n),n=""):n+=l;return t.push(n),t.map(l=>l.trim())}function mh(e){const t=[];let n="",r=null,l=!1;for(const i of e)r?i===r?r=null:n+=i:i==='"'||i==="'"?(r=i,l=!0):/\s/.test(i)?((n!==""||l)&&t.push(n),n="",l=!1):n+=i;return(n!==""||l)&&t.push(n),t}function gh(e,t,n,r={}){var s,u;const l=e.trim().toLowerCase().replace(/\s+/g," ");r[l]&&(e=r[l]);const i=hh(e);let o;for(let a=0;a<i.length;a++){const m=mh(i[a]);if(m.length===0)return n.print("syntax error: empty command in pipeline","error");const[h,...g]=m,E=t.get(h)??t.get(h.replace(/^(\/|~\/)?bin\//,""));if(!E&&g.length===0&&i.length===1&&(h==="-"||((s=be(n.fs,n.cwd,h))==null?void 0:s.node.type)==="dir"))return t.get("cd").run([h],{...n,stdin:o});if(!E){n.print(`command not found: ${h}`,"error");const w=af(h,[...t.names(),...Object.keys(r)]);if(!w.length)return n.print("type `help` to see what this shell can do · 输入 help 查看全部命令","muted");const F=[...i.slice(0,a),[w[0],...g].join(" "),...i.slice(a+1)].join(" | ");return(u=n.suggest)==null||u.call(n,F),n.print(w.length===1?`OK, you could try: \`${w[0]}\` — press Tab or → to accept · 你是不是想输入 ${w[0]}？`:`Maybe you want: ${w.map(f=>`\`${f}\``).join(", ")} — Tab or → takes \`${w[0]}\``,"warning")}if(a===i.length-1)return E.run(g,{...n,stdin:o});const S=[];E.run(g,{...n,stdin:o,tty:!1,print:w=>void S.push(...w.split(`
 `)),printParts:w=>void S.push(w.map(F=>F.text).join("")),clear:()=>{},welcome:()=>{},switchPage:()=>{},page:w=>void S.push(...w)}),o=S.join(`
 `)}}function yh(){const e=new Map,t=new Map;return{register(n){e.set(n.name.toLowerCase(),n)},alias(n,r){t.set(n.toLowerCase(),r.toLowerCase())},get(n){const r=n.toLowerCase();return e.get(r)??e.get(t.get(r)??"")},list(){return[...e.values()].filter(n=>!n.hidden)},names(){return[...new Set([...e.keys(),...t.keys()])].sort()},aliasesOf(n){return[...t].filter(([,r])=>r===n).map(([r])=>r)}}}const vh={bio:"About me",research:"Research interests",projects:"Selected projects",papers:"Publications",awards:"Honors and awards",education:"Education",contact:"Contact information"};function ff(e,t){return typeof t=="string"?_o(e,t):No(e,Object.fromEntries(Object.entries(t).map(([n,r])=>[n,ff(n,r)])))}function wh(e){const t=ff("~",ih);t.children["cv.pdf"]=_o("cv.pdf","",!0);const n=Object.fromEntries(e.list().filter(r=>!r.doc).map(r=>[r.name,_o(r.name,r.desc)]));return No("~",{bin:No("bin",n),...t.children})}const kh=Object.keys(U.pages);function Sh(e){return Object.entries(U.pages).map(([t,n])=>({name:t,desc:vh[t]??n,group:"Navigation",doc:!0,run(r,l){var o;l.tty&&l.switchPage(t);const i=be(e(),[],n);(i==null?void 0:i.node.type)==="file"&&l.print(i.node.content),t==="projects"&&l.tty&&((o=l.openShowcase)==null||o.call(l))}}))}const Qu=U.pages;function Ch(e,t){for(let n=Math.min(e.length,Math.max(1,Math.floor(t/4)));n>=1;n--){const r=Math.ceil(e.length/n),l=[];for(let i=0;i<n;i++)l.push(Math.max(0,...e.slice(i*r,i*r+r).map(o=>o.length))+2);if(l.reduce((i,o)=>i+o,0)-2<=t)return{n,rows:r,widths:l}}return{n:1,rows:e.length,widths:[0]}}const df={name:"ls",desc:"List files",group:"Filesystem",run(e,t){const n=e.some(s=>/^-\w*l/.test(s)),r=e.find(s=>!s.startsWith("-")),l=be(t.fs,t.cwd,r);if(!l)return t.print(`ls: cannot access '${r}': No such file or directory`,"error");if(l.node.type==="file")return t.print(l.node.name);const i=Object.values(l.node.children).map(s=>({name:s.type==="dir"?`${s.name}/`:s.name,dir:s.type==="dir"}));if(!i.length)return t.print("(empty)","muted");if(n){for(const s of Object.values(l.node.children)){const u=s.type==="dir"?Object.keys(s.children).length:s.pdf?135120:new TextEncoder().encode(s.content).length;t.printParts([{text:`${s.type==="dir"?"drwxr-xr-x":"-rw-r--r--"}  tang  ${String(u).padStart(6)}  `,kind:"muted"},{text:s.type==="dir"?`${s.name}/`:s.name,kind:s.type==="dir"?"dir":void 0}])}return}if(!t.tty)return t.print(i.map(s=>s.name).join(`
 `));const o=Ch(i.map(s=>s.name),t.cols);for(let s=0;s<o.rows;s++){const u=[];for(let a=0;a<o.n;a++){const m=i[a*o.rows+s];m&&(u.push({text:m.name,kind:m.dir?"dir":void 0}),a<o.n-1&&i[(a+1)*o.rows+s]&&u.push({text:" ".repeat(o.widths[a]-m.name.length)}))}t.printParts(u)}}},Eh={name:"cd",desc:"Change directory",group:"Filesystem",run([e="~"],t){if(e==="-")return t.oldCwd?(t.print(Nn(t.oldCwd),"dir"),t.setCwd(t.oldCwd)):t.print("cd: OLDPWD not set","error");const n=be(t.fs,t.cwd,e);if(!n)return t.print(`cd: no such file or directory: ${e}`,"error");if(n.node.type!=="dir")return t.print(`cd: not a directory: ${e}`,"error");t.setCwd(n.segments)}},xh={name:"pwd",desc:"Print working directory",group:"Filesystem",run:(e,t)=>t.print(Nn(t.cwd))},_h={name:"cat",desc:"Display file contents",group:"Filesystem",run(e,t){if(!e.length)return t.print("Usage: cat <file>","muted");for(const n of e){const r=be(t.fs,t.cwd,n)??(Qu[n.toLowerCase()]?be(t.fs,[],Qu[n.toLowerCase()]):null);if(!r){t.print(`cat: ${n}: No such file or directory`,"error");continue}if(r.node.type==="dir"){const l=r.node.children["README.md"];(l==null?void 0:l.type)==="file"?t.print(l.content):t.print(`cat: ${n}: Is a directory`,"error");continue}if(r.node.pdf){t.print(`Opening ${r.node.name} in viewer… (esc to close)`,"muted"),t.openCV();continue}t.print(r.node.content)}}},Nh={name:"tree",desc:"Show directory tree",group:"Filesystem",run([e],t){const n=be(t.fs,t.cwd,e);if(!n)return t.print(`tree: ${e}: No such file or directory`,"error");if(n.node.type==="file")return t.print(n.node.name);t.print(Nn(n.segments),"dir");const r=(l,i)=>{if(l.type!=="dir")return;const o=Object.values(l.children);o.forEach((s,u)=>{const a=u===o.length-1;t.print(`${i}${a?"└── ":"├── "}${s.name}`,s.type==="dir"?"dir":"output"),s.type==="dir"&&r(s,i+(a?"    ":"│   "))})};r(n.node,"")}},Ph={name:"ll",desc:"ls -l",group:"Filesystem",run:(e,t)=>df.run(["-l",...e],t)};function Zl(e,t,n,r){return t?Zp(e.fs,e.cwd,t,n,l=>e.print(l,"error")):(e.stdin===void 0&&e.print(r,"muted"),e.stdin)}const jh={name:"grep",desc:"Search lines",group:"Text",run(e,t){const n=[...e],r=n[0]==="-i"?(n.shift(),!0):!1,l=n[0];if(!l)return t.print("Usage: grep [-i] <pattern> [file]","muted");const i=Zl(t,n[1],"grep","grep: no input (pipe something or pass a file)");if(i===void 0)return;const o=r?l.toLowerCase():l;for(const s of i.split(`

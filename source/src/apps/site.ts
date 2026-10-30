@@ -43,7 +43,7 @@ export const share: Command = {
 };
 
 export const showcase: Command = {
-  name: 'showcase', desc: 'Open the projects showcase (showcase 4 = project 4)', group: 'Navigation',
+  name: 'showcase', desc: 'Open the projects showcase (showcase 1 = project 1)', group: 'Navigation',
   run([n], ctx) {
     const i = n == null ? undefined : Number.parseInt(n, 10) - 1;
     if (!ctx.openShowcase || (i !== undefined && Number.isNaN(i)) || !ctx.openShowcase(i)) return ctx.print(`showcase: no project ${n} · try projects`, 'error');

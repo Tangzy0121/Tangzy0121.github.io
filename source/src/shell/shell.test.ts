@@ -41,7 +41,7 @@ test('completion: case-insensitive, aliases, phrases, substring', () => {
 test('completion: paths and cd dirs-only', () => {
   assert.equal(c('cat AB').next, 'cat about.md ');
   assert.equal(c('cd pro').next, 'cd projects/');
-  assert.equal(c('cat projects/sa').next, 'cat projects/safece/');
+  assert.equal(c('cat research/sa').next, 'cat research/safece/');
   assert.equal(ghost('sch', words, ph, fs, []), 'olar');
 });
 
@@ -49,7 +49,7 @@ test('vfs: docs at root, tools in /bin, case-insensitive', () => {
   assert.ok(resolve(fs, [], 'bin/less'));
   assert.ok(resolve(fs, [], 'bin/whoami'));
   assert.equal(resolve(fs, [], 'bin/bio'), null, 'documents are not in /bin');
-  assert.ok(resolve(fs, [], '~/Projects/SafeCE/README.md'));
+  assert.ok(resolve(fs, [], '~/Research/SafeCE/README.md'));
 });
 
 test('docs-as-commands: bio ≡ cat about.md', () => {

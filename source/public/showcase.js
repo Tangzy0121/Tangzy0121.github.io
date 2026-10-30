@@ -4,9 +4,6 @@
   const S = './showcase/';
   const gh = (r) => ({ t: 'GitHub', u: 'https://github.com/Tangzy0121/' + r });
   const P = [
-    { n: 'Asimov Cascade', tag: 'Research · AI Safety / Robotics', blurb: 'Detecting cascading safety failures across interacting humanoid robotic subsystems.', status: 'ICRA 2027 · Under Review', paper: 0 },
-    { n: 'SafeCE', tag: 'Research · Database Systems', blurb: 'Risk-aware evaluation and upper-tail calibration for cardinality estimation.', status: 'In preparation' },
-    { n: 'Anyscale-DBCO', tag: 'Research · ML4CO', blurb: 'Scaling combinatorial optimization through decomposition, solver routing and composition.', status: 'Ongoing' },
     { n: 'Folio', tag: 'Android · Kotlin', blurb: 'Local-first, privacy-friendly reader for Markdown, HTML and zipped web pages. E-book style themes, TOC, reading progress, Markdown editing, tags. No account, no cloud, no tracking.', img: [S + 'og-Folio.png'], icon: S + 'folio-icon.png', src: 'GitHub social preview + app launcher icon from the repo', links: [gh('Folio')] },
     { n: 'Loci', tag: 'App · TypeScript', blurb: 'A personal learning agent that turns study material into readable, verifiable, traceable learning projects.', status: 'In progress · source private', img: [S + 'loci.jpg'], src: 'Live capture of the public Loci privacy-policy page', links: [{ t: 'Privacy policy', u: 'https://tangzy0121.github.io/loci-privacy/' }] },
     { n: 'MewCode', tag: 'Go · AI coding agent', blurb: 'A terminal AI coding agent built from scratch in Go: agent loop, tool calling, permission gating, streaming TUI. Every chapter ships with real-machine evidence.', status: 'v1.0 in progress', img: [S + 'og-mewcode-go.png'], src: 'GitHub social preview of mewcode-go', links: [gh('mewcode-go'), { t: 'v0 (earlier)', u: 'https://github.com/Tangzy0121/mewcode-v0' }] },
@@ -66,9 +63,6 @@
     Folio: `<div class="cv" style="background:linear-gradient(135deg,#F2F0EA,#E7EEE9);color:#23272E"><img src="${S}folio-icon.png" alt="" style="width:64px;height:64px;border-radius:16px;object-fit:cover;box-shadow:0 4px 14px rgba(0,0,0,.15)"><span class="mk" style="font-family:Inter,system-ui,sans-serif;font-weight:800;color:#23272E">Folio</span><span class="sb"><i style="background:#DCEBD6;color:#3C7A3C">MD</i><i style="background:#FBE4CC;color:#B45F06">HTML</i><i style="background:#D6E4F0;color:#1F5C99">ZIP</i></span></div>`,
     Loci: mono('loci<span style="color:#7d8590">_</span>', '资料 → 学习书 → 测验 → 复习', '#7fb3ff'),
     MewCode: `<div class="cv" style="background:#0f1115;color:#d6d9df;align-items:flex-start;padding:14px 18px"><pre style="margin:0;color:#f0c48c;font-size:15px;line-height:1.15"> /\\_/\\\n( o.o )\n > ^ <</pre><span class="sb" style="color:#98c379">$ mewcode<br><span style="color:#e5c07b">╭ ✓ read</span> <span style="color:#e5c07b">╭ ✋ edit?</span></span></div>`,
-    'Asimov Cascade': mono('[AC]', 'cascade monitoring · ICRA 2027', '#e5c07b'),
-    SafeCE: mono('[CE]', 'risk-aware cardinality estimation', '#e5c07b'),
-    'Anyscale-DBCO': mono('[CO]', 'decompose → route → compose', '#e5c07b'),
   };
   function thumb(p) {
     const num = '';
@@ -81,8 +75,7 @@
   const card = (p, i, k = 0) => `<button class="card${BIG.has(p.n) ? ' big' : ''}" style="--k:${k}" data-i="${i}" aria-label="${esc(p.n)}">${thumb(p).replace('<div class="th">', `<div class="th"><span class="num">${String(i + 1).padStart(2, '0')}</span>`)}<div class="c"><span class="nm">${esc(p.n)}</span><span class="tg">${esc(p.tag)}</span>${p.status ? `<span class="st">${esc(p.status)}</span>` : ''}<span class="bl">${esc(p.blurb)}</span><span class="try">${window.__demos?.[p.n] ? '▶ enter demo room' : '→ open'}</span></div></button>`;
   function gallery() {
     cur = -1; $('.t').textContent = '~/projects · showcase'; $('[data-a=back]').style.display = 'none';
-    const r = P.map((p, i) => [p, i]).filter(([p]) => p.tag.startsWith('Research')), o = P.map((p, i) => [p, i]).filter(([p]) => !p.tag.startsWith('Research'));
-    $('.body').innerHTML = `<div class="boot"><b>tang:~/projects$</b> ls --demos · ${o.length} playable rooms · ${r.length} research</div><h3>Personal projects · click a card to enter its demo room</h3><div class="grid bento">${o.map(([p, i], k) => card(p, i, k)).join('')}</div><h3>Research</h3><div class="grid">${r.map(([p, i], k) => card(p, i, k + o.length)).join('')}</div>`;
+    $('.body').innerHTML = `<div class="boot"><b>tang:~/projects$</b> ls --demos · ${P.length} playable rooms</div><h3>Personal projects · click a card to enter its demo room · research lives in <code>research</code></h3><div class="grid bento">${P.map((p, i) => card(p, i, i)).join('')}</div>`;
     $('.body').scrollTop = 0;
   }
   function detail(i, dx = 24) {
