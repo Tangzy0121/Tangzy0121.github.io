@@ -11,8 +11,8 @@
     { n: 'Loci', tag: 'App · TypeScript', blurb: 'A personal learning agent that turns study material into readable, verifiable, traceable learning projects.', status: 'In progress · source private', img: [S + 'loci.jpg'], src: 'Live capture of the public Loci privacy-policy page', links: [{ t: 'Privacy policy', u: 'https://tangzy0121.github.io/loci-privacy/' }] },
     { n: 'MewCode', tag: 'Go · AI coding agent', blurb: 'A terminal AI coding agent built from scratch in Go: agent loop, tool calling, permission gating, streaming TUI. Every chapter ships with real-machine evidence.', status: 'v1.0 in progress', img: [S + 'og-mewcode-go.png'], src: 'GitHub social preview of mewcode-go', links: [gh('mewcode-go'), { t: 'v0 (earlier)', u: 'https://github.com/Tangzy0121/mewcode-v0' }] },
     { n: 'tangzy-btw', tag: 'TypeScript · pi extension', blurb: 'KimiCode-style /btw side questions for pi: a bottom overlay panel with markdown streaming and in-panel follow-ups, never touching the main transcript.', img: [S + 'btw.png'], src: 'docs/screenshot.png from the repo', links: [gh('tangzy-btw')] },
-    { n: 'clawd-roxy-theme', tag: 'Desktop pet theme', blurb: 'Chibi Roxy theme for Clawd on Desk, with animated states for idle, thinking, working and sleeping.', img: ['idle', 'thinking', 'working', 'sleeping'].map((s) => S + 'roxy-' + s + '.apng'), caps: ['idle', 'thinking', 'working', 'sleeping'], src: 'APNG animations from themes/roxy-chibi/assets', links: [gh('clawd-roxy-theme')] },
-    { n: 'Market Survey Awards', tag: 'Web · Reading site', blurb: 'Reading pages for 2024–2026 market survey competition winning papers, official appendices and defense videos.', img: [S + 'msa.jpg'], src: 'Live capture of the public site', links: [{ t: 'Open site', u: 'https://tangzy0121.github.io/market-survey-awards/' }, gh('market-survey-awards')] },
+    { n: 'clawd-roxy-theme', tag: 'Desktop pet theme', blurb: 'Chibi Roxy theme for Clawd on Desk, with animated states for idle, thinking, working and sleeping.', img: ['idle', 'thinking', 'working', 'happy', 'sleeping'].map((s) => S + 'roxy-' + s + '.apng'), caps: ['idle', 'thinking', 'working', 'happy', 'sleeping'], src: 'APNG animations from themes/roxy-chibi/assets', links: [gh('clawd-roxy-theme')] },
+    { n: 'Market Survey Awards', tag: 'Web · Reading site', blurb: 'Reading pages for 2024–2026 market survey competition winning papers, official appendices and defense videos.', img: [S + 'msa-preview.png'], src: 'output/preview.png from the repo', links: [{ t: 'Open site', u: 'https://tangzy0121.github.io/market-survey-awards/' }, gh('market-survey-awards')] },
   ];
   const css = `
 #scv{position:fixed;inset:0;z-index:9998;background:color-mix(in srgb,var(--page-bg) 80%,transparent);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-family:'Maple Mono','JetBrains Mono',ui-monospace,monospace;color:var(--text)}
@@ -27,7 +27,7 @@
 #scv .card{text-align:left;padding:0;display:flex;flex-direction:column;overflow:hidden;color:var(--text);border-radius:8px}
 #scv .card .th{height:140px;background:color-mix(in srgb,var(--border) 35%,transparent);display:flex;align-items:center;justify-content:center;gap:4px;overflow:hidden}
 #scv .card .th img{width:100%;height:100%;object-fit:cover} #scv .card .th img.sm{width:25%;height:auto;object-fit:contain}
-#scv .card .th .txt{color:var(--muted);font-size:13px;padding:12px;text-align:center}
+#scv .cv{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-family:'Maple Mono',ui-monospace,monospace}#scv .cv .mk{font-size:30px;letter-spacing:.02em}#scv .cv .sb{font-size:11.5px;opacity:.85;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}#scv .cv .sb i{font-style:normal;border-radius:4px;padding:1px 6px;font-weight:700}#scv .card .th .txt{color:var(--muted);font-size:13px;padding:12px;text-align:center}
 #scv .card .c{padding:10px 12px;display:flex;flex-direction:column;gap:4px}
 #scv .card .nm{color:var(--link);font-size:15px} #scv .tg{color:var(--muted);font-size:12px} #scv .st{color:var(--warning);font-size:12px}
 #scv .card .bl{font-size:12.5px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -59,7 +59,20 @@
   const $ = (s) => root.querySelector(s);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
   function close() { root?.remove(); root = null; document.removeEventListener('keydown', onKey, true); document.querySelector('textarea,input')?.focus(); }
+
+  // Card covers: real assets where they exist; otherwise a terminal-style mark (labelled as a mark, not a screenshot).
+  const mono = (big, sub, fg = '#98c379') => `<div class="cv" style="background:#0f1115;color:${fg}"><span class="mk">${big}</span><span class="sb">${sub}</span></div>`;
+  const COVER = {
+    Folio: `<div class="cv" style="background:linear-gradient(135deg,#F2F0EA,#E7EEE9);color:#23272E"><img src="${S}folio-icon.png" alt="" style="width:64px;height:64px;border-radius:16px;object-fit:cover;box-shadow:0 4px 14px rgba(0,0,0,.15)"><span class="mk" style="font-family:Inter,system-ui,sans-serif;font-weight:800;color:#23272E">Folio</span><span class="sb"><i style="background:#DCEBD6;color:#3C7A3C">MD</i><i style="background:#FBE4CC;color:#B45F06">HTML</i><i style="background:#D6E4F0;color:#1F5C99">ZIP</i></span></div>`,
+    Loci: mono('loci<span style="color:#7d8590">_</span>', '资料 → 学习书 → 测验 → 复习', '#7fb3ff'),
+    MewCode: `<div class="cv" style="background:#0f1115;color:#d6d9df;align-items:flex-start;padding:14px 18px"><pre style="margin:0;color:#f0c48c;font-size:15px;line-height:1.15"> /\\_/\\\n( o.o )\n > ^ <</pre><span class="sb" style="color:#98c379">$ mewcode<br><span style="color:#e5c07b">╭ ✓ read</span> <span style="color:#e5c07b">╭ ✋ edit?</span></span></div>`,
+    'Asimov Cascade': mono('[AC]', 'cascade monitoring · ICRA 2027', '#e5c07b'),
+    SafeCE: mono('[CE]', 'risk-aware cardinality estimation', '#e5c07b'),
+    'Anyscale-DBCO': mono('[CO]', 'decompose → route → compose', '#e5c07b'),
+  };
   function thumb(p) {
+    const num = '';
+    if (COVER[p.n]) return `<div class="th">${COVER[p.n]}</div>`;
     if (!p.img) return `<div class="th"><div class="txt">${esc(p.tag.split(' · ')[1] || p.tag)}</div></div>`;
     if (p.img.length > 1) return `<div class="th">${p.img.map((u) => `<img class="sm" src="${u}" alt="" loading="lazy">`).join('')}</div>`;
     return `<div class="th"><img src="${p.img[0]}" alt="${esc(p.n)} preview" loading="lazy"></div>`;

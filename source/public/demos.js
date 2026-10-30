@@ -24,126 +24,117 @@
 .dm iframe{width:100%;height:460px;border:1px solid var(--border);border-radius:8px;background:#fff}`;
   if (!document.getElementById('dm-css')) { const s = document.createElement('style'); s.id = 'dm-css'; s.textContent = css; document.head.appendChild(s); }
 
-  // ---------- Folio: local-first reader ----------
+  const note = (t) => `<p class="mut" style="font-size:12px;margin:8px 0 0">${t}</p>`;
+
+  // ---------- Folio: the repo's own interactive prototype (design/folio-demo.html), embedded unchanged ----------
   function folio(el) {
-    const docs = [
-      { n: 'Reading notes.md', tags: ['notes'], fav: true, ch: [['Why local-first', 'Files are copied into the app\'s own library. The original stays untouched, nothing is uploaded, and there is no account.'], ['Themes', 'Tap Aa to switch between paper, sepia and night. Font size and code colours follow the theme.'], ['Progress', 'Reading position is remembered per document, so next time you continue where you stopped.']] },
-      { n: 'Lecture-03.html', tags: ['course'], fav: false, ch: [['Processes', 'A process is a running program with its own address space.'], ['Threads', 'Threads share memory inside one process and are scheduled independently.']] },
-      { n: 'site-export.zip', tags: ['web'], fav: false, ch: [['index.html', 'Zipped web pages open offline, with their images and styles.'], ['about.html', 'Links between pages inside the zip keep working.']] },
-    ];
-    let theme = 'paper', fs = 15, d = null, c = 0;
-    const pos = {};
-    el.innerHTML = `<div class="dm"><div class="phone th-paper"></div><p class="mut" style="text-align:center;margin-top:8px">Try: open a file · ☰ table of contents · ‹ › pages · Aa theme · A−/A+ · ★ favourite · ✏️ edit</p></div>`;
-    const ph = el.querySelector('.phone');
-    const render = () => {
-      ph.className = 'phone th-' + theme;
-      if (!d) {
-        ph.innerHTML = `<div class="top"><b>Folio · Recent</b><button data-k="aa">Aa</button></div><div class="pgc">${docs.map((x, i) => `<div class="doc" data-o="${i}">${x.fav ? '★ ' : ''}${h(x.n)}${x.tags.map((t) => `<span class="chip">${t}</span>`).join('')}<br><small>${pos[i] != null ? 'continue at ' + (pos[i] + 1) + '/' + x.ch.length : 'not opened yet'}</small></div>`).join('')}<div class="mut" style="font-size:12px;margin-top:12px">🔒 Local library · 0 accounts · 0 uploads</div></div><div class="ft"><span>${docs.length} files</span><button data-k="imp">＋ Open / import</button></div>`;
-        return;
-      }
-      const [t, body] = d.ch[c];
-      ph.innerHTML = `<div class="top"><button data-k="home">←</button><b>${h(d.n)}</b><button data-k="toc">☰</button><button data-k="fav">${d.fav ? '★' : '☆'}</button><button data-k="aa">Aa</button><button data-k="edit">✏️</button></div><div class="pgc" style="font-size:${fs}px"><h3 style="margin-top:0">${h(t)}</h3><p class="body">${h(body)}</p></div><div class="ft"><button data-k="prev" ${c ? '' : 'disabled'}>‹</button><span>${c + 1} / ${d.ch.length} · <button data-k="sm">A−</button> <button data-k="lg">A+</button></span><button data-k="next" ${c < d.ch.length - 1 ? '' : 'disabled'}>›</button></div>`;
-    };
-    ph.addEventListener('click', (e) => {
-      const o = e.target.closest('[data-o]'); if (o) { d = docs[+o.dataset.o]; c = pos[+o.dataset.o] || 0; return render(); }
-      const k = e.target.closest('[data-k]')?.dataset.k; const i = docs.indexOf(d);
-      if (k === 'aa') theme = { paper: 'sepia', sepia: 'night', night: 'paper' }[theme];
-      if (k === 'home') d = null; if (k === 'prev') c--; if (k === 'next') c++; if (k === 'fav') d.fav = !d.fav;
-      if (k === 'sm') fs = Math.max(12, fs - 1); if (k === 'lg') fs = Math.min(22, fs + 1);
-      if (k === 'imp') { docs.push({ n: `imported-${docs.length + 1}.md`, tags: ['new'], fav: false, ch: [['Imported', 'A copy now lives in the local library; the original file was not modified.']] }); }
-      if (k === 'toc') { ph.querySelector('.pgc').innerHTML = `<h3 style="margin-top:0">Contents</h3>${d.ch.map((x, j) => `<div class="doc" data-c="${j}">${j === c ? '▸ ' : ''}${h(x[0])}</div>`).join('')}`; return; }
-      const cc = e.target.closest('[data-c]'); if (cc) c = +cc.dataset.c;
-      if (k === 'edit') { const p = ph.querySelector('.body'); p.contentEditable = 'true'; p.style.outline = '1px dashed currentColor'; p.focus(); p.onblur = () => { d.ch[c][1] = p.textContent; render(); }; return; }
-      if (d) pos[i] = c; render();
-    });
-    render();
+    el.innerHTML = `<div class="dm"><iframe src="./showcase/folio-demo.html" title="Folio interactive prototype" style="height:640px"></iframe>${note('This is <b>Folio\'s own clickable prototype</b> (<code>design/folio-demo.html</code> in the repo, the design the Android app was built from): file cards for MD / ZIP / HTML, recent and favourites with ★, the <b>Aa</b> sheet with the app\'s 9 reading themes (纸白 · 米黄 · 青墨 · 灰岩 · 夜黑 · 深蓝夜 · 晨曦 · 远山 · 竹林, same as <code>ReaderTheme.kt</code>), fonts and size, ☰ table of contents, and 🗂 the file tree inside a ZIP. The real app is native Kotlin on Android 7.0+; this web prototype is simplified.')}</div>`;
   }
 
-  // ---------- Loci: study material -> traceable learning project ----------
+  // ---------- Loci: flow from the public privacy policy (material -> learning book & chapters -> quiz -> review) ----------
   function loci(el) {
-    const sample = 'Gradient descent updates parameters in the direction that reduces the loss.\nThe learning rate controls the step size of each update.\nA learning rate that is too large can make training diverge.\nMomentum accumulates past gradients to smooth the updates.';
-    el.innerHTML = `<div class="dm"><div class="row" style="align-items:stretch;gap:12px"><div style="flex:1;min-width:240px"><div class="mut">1 · Paste study material (or keep the sample)</div><textarea rows="7">${sample}</textarea><div class="row" style="margin-top:6px"><button data-k="go">▶ Build learning project</button><label class="mut"><input type="checkbox" checked style="width:auto"> keep material on this device</label></div></div><div class="pane chat" style="flex:1.3;min-width:260px;min-height:220px;max-height:380px;overflow:auto"><div class="mut">2 · Loci agent output appears here</div></div></div><p class="mut" style="font-size:12px">Mock of the idea only (Loci's source is private); runs entirely in your browser, nothing is sent anywhere.</p></div>`;
-    const out = el.querySelector('.chat'), ta = el.querySelector('textarea');
-    const say = (cls, html) => { const m = document.createElement('div'); m.className = 'm ' + cls; m.innerHTML = html; out.appendChild(m); out.scrollTop = out.scrollHeight; return m; };
-    el.querySelector('[data-k=go]').onclick = async (e) => {
-      e.target.disabled = true; out.innerHTML = '';
-      const lines = ta.value.split(/\n+/).map((s) => s.trim()).filter(Boolean).slice(0, 8);
-      say('me', `Turn this into a study project (${lines.length} lines).`);
-      const t = say('ag', '<span class="mut">reading material…</span>'); await sleep(600);
-      t.innerHTML = '<b>Outline</b> (each point cites its source line)<br>' + lines.map((l, i) => `• ${h(l.split(/[,.;]/)[0])} <a href="#" data-l="${i}">[L${i + 1}]</a>`).join('<br>');
-      await sleep(500);
-      const words = lines[0].replace(/[.,;]/g, '').split(/\s+/).sort((a, b) => b.length - a.length);
-      const key = words[0]; const src = lines.findIndex((l) => l.includes(key));
-      const q = say('ag', `<b>Check yourself</b><br>${h(lines[src].replace(key, '_____'))}<div class="row" style="margin-top:6px"><input placeholder="your answer" style="flex:1"><button>check</button></div>`);
-      q.querySelector('button').onclick = () => { const ok = q.querySelector('input').value.trim().toLowerCase().replace(/[.,]/g, '') === key.toLowerCase().replace(/[.,]/g, ''); say('ag', ok ? `<span class="ok">✓ correct</span> · verified against <b>[L${src + 1}]</b>` : `<span class="warn">✗ not quite</span> · answer: <b>${h(key)}</b> (see [L${src + 1}])`); };
-      out.querySelectorAll('[data-l]').forEach((a) => (a.onclick = (ev) => { ev.preventDefault(); const i = +a.dataset.l; say('ag', `<span class="mut">source [L${i + 1}]:</span> “${h(lines[i])}”`); }));
-      e.target.disabled = false;
-    };
+    const steps = [
+      ['登录', 'Sign in via OIDC', 'Only the identity provider\'s user ID is kept, never your password.'],
+      ['上传资料', 'Upload study material', 'Documents you add become the source of a learning project.'],
+      ['生成学习书', 'Generate a learning book', 'Loci\'s server sends parts of the material to the LLM (DeepSeek by default, OpenAI-compatible). The model key stays on the server.'],
+      ['章节阅读', 'Read by chapter', 'The book is split into chapters you can read, with each point traceable to the material.'],
+      ['测验', 'Quiz & verify', 'Answer questions generated from the chapters; answers are recorded.'],
+      ['复习安排', 'Review schedule', 'Quiz results drive what to review next and the project\'s progress.'],
+    ];
+    let k = 0;
+    el.innerHTML = `<div class="dm"><div class="row" style="gap:4px;margin-bottom:10px">${steps.map((s, i) => `<button data-s="${i}">${i + 1}. ${s[0]}</button>`).join('<span class="mut">→</span>')}</div><div class="pane" style="min-height:150px"><div class="cap" style="font-size:15px;color:var(--path)"></div><p class="txt" style="margin:8px 0"></p><div class="flow mut" style="font-size:12px"></div></div><div class="row" style="margin-top:8px"><button data-k="p">‹ prev</button><button data-k="n">next ›</button></div>${note('Loci\'s source is private, so this is a <b>walkthrough of the stated product flow</b>, not the app. Every step and data-handling line comes from the public <a href="https://tangzy0121.github.io/loci-privacy/" target="_blank" rel="noopener">Loci privacy policy</a> (2026-09-29): OIDC login, learning data on Loci\'s server (PostgreSQL/JSON) and the device, LLM via DeepSeek with the key server-side only.')}</div>`;
+    const where = ['device ⇄ OIDC provider', 'device → Loci server', 'Loci server → LLM (DeepSeek) → Loci server', 'Loci server ⇄ device (local DB)', 'device → Loci server', 'Loci server ⇄ device'];
+    const show = () => { el.querySelectorAll('[data-s]').forEach((b, i) => b.classList.toggle('on', i === k)); el.querySelector('.cap').textContent = `${k + 1}. ${steps[k][0]} · ${steps[k][1]}`; el.querySelector('.txt').textContent = steps[k][2]; el.querySelector('.flow').textContent = 'data path: ' + where[k]; el.querySelector('[data-k=p]').disabled = !k; el.querySelector('[data-k=n]').disabled = k === steps.length - 1; };
+    el.addEventListener('click', (e) => { const s = e.target.closest('[data-s]'); if (s) k = +s.dataset.s; const b = e.target.closest('[data-k]')?.dataset.k; if (b === 'p') k--; if (b === 'n') k++; show(); });
+    show();
   }
 
-  // ---------- MewCode: agent loop with tool calls + permission gate ----------
+  // ---------- MewCode: v0's real agent loop: 6 tools, 3 permission modes, tool cards, [a]/[s]/[d] prompt ----------
   function mewcode(el) {
-    el.innerHTML = `<div class="dm"><div class="term"><span class="d">mewcode v1.0-dev · model: (mock) · cwd: ~/demo\nType a task, e.g. "fix the failing test" or "add a hello command".</span>\n</div><div class="row" style="margin-top:8px"><input placeholder="› ask mewcode…" style="flex:1"><button data-k="run">send</button></div><p class="mut" style="font-size:12px">Scripted replay of MewCode's agent loop (no real model is called): plan → tool call → permission gate → edit → test.</p></div>`;
-    const t = el.querySelector('.term'), inp = el.querySelector('input'), btn = el.querySelector('[data-k=run]');
+    const SIDE = { write: 1, edit: 1, bash: 1 };
+    el.innerHTML = `<div class="dm"><div class="row" style="margin-bottom:6px"><span class="mut">mode:</span>${['default', 'plan', 'auto'].map((m) => `<button data-m="${m}" class="${m === 'default' ? 'on' : ''}">${m}</button>`).join('')}<span class="mut aa" style="font-size:12px"></span></div><div class="term"><span style="color:#f0c48c"> /\\_/\\\n( o.o )\n &gt; ^ &lt;</span>\n<span class="d">mewcode · tools: read write edit glob grep bash</span>\n<span class="d">try: "fix the failing test" — then switch mode and run it again</span>\n</div><div class="perm" style="display:none;margin-top:6px"></div><div class="row" style="margin-top:8px"><input value="fix the failing test" style="flex:1"><button data-k="run">send</button></div>${note('Replays the <b>mewcode-v0</b> agent loop from its source: the six tools in <code>tools/registry.go</code>; <code>permission.go</code> modes (read-only tools always run; write/edit/bash ask in <b>default</b>, are refused in <b>plan</b>, run in <b>auto</b>); the TUI\'s ⏳/✓/✗ tool cards and the <code>✋ allow …? [a] allow once [s] always allow [d] deny</code> prompt. Scripted: no model is called. v1 (<a href="https://github.com/Tangzy0121/mewcode-go" target="_blank" rel="noopener">mewcode-go</a>) is being rebuilt chapter by chapter.')}</div>`;
+    const t = el.querySelector('.term'), inp = el.querySelector('input'), btn = el.querySelector('[data-k=run]'), perm = el.querySelector('.perm'), aaL = el.querySelector('.aa');
+    let mode = 'default'; const always = new Set();
+    const setAA = () => (aaL.textContent = always.size ? '· always allowed: ' + [...always].join(', ') : '');
+    el.querySelectorAll('[data-m]').forEach((b) => (b.onclick = () => { mode = b.dataset.m; el.querySelectorAll('[data-m]').forEach((x) => x.classList.toggle('on', x === b)); }));
     const w = (cls, s) => { const sp = document.createElement('span'); sp.className = cls; sp.textContent = s; t.appendChild(sp); t.scrollTop = t.scrollHeight; return sp; };
-    const stream = async (cls, s) => { const sp = w(cls, ''); for (const ch of s) { sp.textContent += ch; t.scrollTop = t.scrollHeight; await sleep(12); } };
-    const ask = () => new Promise((res) => { const r = document.createElement('span'); r.innerHTML = '<span class="r">⚠ permission: run </span><b>edit main.go</b>? '; const y = document.createElement('button'), n = document.createElement('button'); y.textContent = 'allow'; n.textContent = 'deny'; [y, n].forEach((b) => { b.style.cssText = 'color:#d6d9df;border-color:#555;margin-right:4px'; r.appendChild(b); }); t.appendChild(r); t.scrollTop = t.scrollHeight; y.onclick = () => { r.remove(); res(true); }; n.onclick = () => { r.remove(); res(false); }; });
+    const card = async (name, arg, out, bad) => { const c = w('t', `╭ ⏳ ${name}  ${arg}\n`); await sleep(450); c.className = bad ? 'r' : 'g'; c.textContent = `╭ ${bad ? '✗' : '✓'} ${name}  ${arg}\n╰ ${out}\n`; };
+    const ask = (name, arg) => new Promise((res) => { perm.style.display = ''; perm.innerHTML = `<span class="warn">✋ allow ${name}?</span> <span class="mut">${h(arg)}</span><div class="row" style="margin-top:4px"><button data-c="a">[a] allow once</button><button data-c="s">[s] always allow</button><button data-c="d">[d] deny</button></div>`; perm.onclick = (e) => { const c = e.target.closest('[data-c]')?.dataset.c; if (!c) return; perm.style.display = 'none'; res(c); }; });
+    const gate = async (name, arg) => {
+      if (!SIDE[name]) return true;
+      if (mode === 'plan') { w('r', `╭ ✗ ${name}  ${arg}\n╰ denied: plan mode is read-only; switch to default or auto mode to run write/edit/bash tools\n`); return false; }
+      if (mode === 'auto' || always.has(name)) return true;
+      const c = await ask(name, arg); if (c === 's') { always.add(name); setAA(); } if (c === 'd') { w('r', `╭ ✗ ${name}  refused by user\n`); return false; } return true;
+    };
     const run = async () => {
-      const q = inp.value.trim() || 'add a hello command'; inp.value = ''; btn.disabled = true;
-      w('u', `\n› ${q}\n`); await sleep(300);
-      const fix = /fix|bug|fail|test/i.test(q);
-      if (fix) { w('t', '⚙ tool bash("go test ./...")'); await sleep(500); w('r', '  ✗ FAIL TestAdd: got 3, want 4\n'); await stream('d', '· thinking: Add() returns a-b instead of a+b\n'); w('t', '⚙ tool read_file("main.go")'); await sleep(400); w('g', '  ✓ 42 lines\n'); }
-      else { await stream('d', '· thinking: need to find where commands are registered\n'); w('t', '⚙ tool read_file("main.go")'); await sleep(400); w('g', '  ✓ 42 lines\n'); w('t', '⚙ tool grep("func register")'); await sleep(400); w('g', '  ✓ cmd/registry.go:12\n'); }
-      const ok = await ask();
-      if (!ok) { w('r', '✗ denied · no files changed. Tell me what to do instead.\n'); btn.disabled = false; return; }
-      w('t', fix ? '⚙ tool edit_file("main.go", +1 −1)\n' : '⚙ tool edit_file("main.go", +6 −1)\n'); await sleep(300);
-      if (fix) { w('r', '- return a - b\n'); w('g', '+ return a + b\n'); } else w('g', '+ reg.Register("hello", func() { fmt.Println("hello") })\n');
-      w('t', '⚙ tool bash("go test ./...")'); await sleep(700); w('g', '  ✓ ok  demo  0.21s\n');
-      await stream('', `Done: "${q}". 1 file changed, tests pass. Evidence: go test output above.\n`);
-      btn.disabled = false; inp.focus();
+      const q = inp.value.trim() || 'fix the failing test'; btn.disabled = true;
+      w('u', `\n› ${q}\n`);
+      if (await gate('bash', '{"command":"go test ./..."}')) await card('bash', '{"command":"go test ./..."}', 'FAIL TestAdd: got -1, want 5', true);
+      await card('grep', '{"pattern":"func Add"}', 'calc.go:3', false);
+      await card('read', '{"path":"calc.go"}', '7 lines', false);
+      w('', 'Add subtracts instead of adding; changing `a - b` to `a + b`.\n');
+      if (await gate('edit', '{"path":"calc.go","old":"a - b","new":"a + b"}')) {
+        await card('edit', '{"path":"calc.go"}', '1 replacement', false);
+        if (await gate('bash', '{"command":"go test ./..."}')) { await card('bash', '{"command":"go test ./..."}', 'ok  calc  0.004s', false); w('', 'Fixed: TestAdd passes.\n'); }
+        else w('', 'Edit made, but I could not re-run the tests.\n');
+      } else w('', mode === 'plan' ? 'No files changed. In plan mode I can only read and propose: replace `a - b` with `a + b` in calc.go.\n' : 'No files changed (edit refused).\n');
+      btn.disabled = false;
     };
     btn.onclick = run; inp.onkeydown = (e) => { if (e.key === 'Enter') { e.stopPropagation(); run(); } };
   }
 
-  // ---------- tangzy-btw: side question overlay that never touches the transcript ----------
+  // ---------- tangzy-btw: bottom overlay, one-shot answers with waiting timer, Recap line, conversations ----------
   function btw(el) {
-    const main = ['› refactor the parser into two passes', '● Reading src/parser.ts …', '● Pass 1: tokenize; pass 2: build AST', '● Editing src/parser.ts (+48 −31)'];
-    el.innerHTML = `<div class="dm"><div class="btwwrap"><div class="term"></div></div><div class="row" style="margin-top:8px"><input value="/btw what does Array.prototype.at(-1) return?" style="flex:1"><button data-k="ask">ask</button><button data-k="x">close panel</button></div><p class="mut" style="font-size:12px">Main session keeps running; the /btw panel overlays the bottom. <span class="cnt"></span></p></div>`;
-    const t = el.querySelector('.term'), wrap = el.querySelector('.btwwrap'), inp = el.querySelector('input'), cnt = el.querySelector('.cnt');
-    t.innerHTML = main.map((l) => `<div>${h(l)}</div>`).join('');
-    const upd = () => (cnt.textContent = `Main transcript: ${t.children.length} lines (unchanged by /btw).`); upd();
-    const answers = (q) => /at\(/.test(q) ? 'It returns the **last element**, like `arr[arr.length - 1]`.\n\n```js\n[1, 2, 3].at(-1) // 3\n```' : `Short answer to “${q.replace(/^\/btw\s*/, '')}”: keep it simple and check the docs. *(mock answer)*`;
-    const md = (s) => h(s).replace(/```(\w*)\n([\s\S]*?)```/g, '<pre style="background:#0f1115;padding:6px;border-radius:4px;margin:6px 0">$2</pre>').replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*(.+?)\*/g, '<i>$1</i>').replace(/\n/g, '<br>');
-    let ov;
-    const ask = async () => {
-      const q = inp.value.trim(); if (!q) return;
+    el.innerHTML = `<div class="dm"><div class="btwwrap"><div class="term"><div class="u">› refactor the parser into two passes</div><div>● read src/parser.ts</div><div>● Pass 1 tokenizes, pass 2 builds the AST.</div><div>● edit src/parser.ts (+48 −31)</div><div class="d">pi main session · keeps running</div></div></div><div class="row" style="margin-top:8px"><input value="/btw what does Array.prototype.at(-1) return?" style="flex:1"><button data-k="ask">enter</button></div><div class="row" style="margin-top:6px"><span class="mut">try:</span><button data-q="/btw new">/btw new</button><button data-q="/btw history">/btw history</button><button data-q="/btw clear">/btw clear</button><button data-k="esc">Esc</button></div><p class="mut cnt" style="font-size:12px"></p>${note('Mirrors the README: <code>/btw &lt;question&gt;</code> opens a <b>bottom overlay</b> (no terminal takeover); a live waiting timer while the model thinks; the answer arrives <b>one-shot</b> (not token-streamed, by design) and lands at its beginning, ending with a <code>&gt; Recap:</code> line; follow-ups keep context; <code>/btw new</code> · <code>history</code> · <code>clear</code>; header shows <code>turn n/N</code> and <code>#n/N</code>; <code>Esc</code> closes and aborts. Side threads never touch the main transcript. Answers here are canned; the real one calls your pi model.')}</div>`;
+    const wrap = el.querySelector('.btwwrap'), main = el.querySelector('.term'), inp = el.querySelector('input'), cnt = el.querySelector('.cnt');
+    const convs = [[]]; let ci = 0, ov, timer, abort = false;
+    const lines0 = main.children.length; const upd = () => (cnt.textContent = `main transcript: ${main.children.length} lines (was ${lines0}) · side conversations: ${convs.length}`);
+    const ans = (q) => /at\(/.test(q) ? 'It returns the **last element**, same as `arr[arr.length - 1]`; negative indexes count from the end.\n\n```js\n[1, 2, 3].at(-1) // 3\n```\n> Recap: `.at(-1)` = last item.'
+      : /why|为什么/.test(q) ? 'Because the follow-up keeps this side thread as context, the panel can answer relative to the previous turn.\n> Recap: follow-ups share side-thread context.'
+      : `Here is a short side answer to “${q}”, using a read-only snapshot of the main session.\n> Recap: side answer, main session untouched.`;
+    const md = (s) => h(s).replace(/```(\w*)\n([\s\S]*?)```/g, '<pre style="background:#0f1115;padding:6px;border-radius:4px;margin:6px 0">$2</pre>').replace(/^&gt; (Recap:.*)$/m, '<div style="color:#98c379">&gt; $1</div>').replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\n/g, '<br>');
+    const paint = (extra = '') => {
       if (!ov) { ov = document.createElement('div'); ov.className = 'ov'; wrap.appendChild(ov); }
-      const a = document.createElement('div'); a.innerHTML = `<div style="color:#7fb3ff">btw › ${h(q.replace(/^\/btw\s*/, ''))}</div><div class="ans"></div>`; ov.appendChild(a);
-      const full = answers(q); const box = a.querySelector('.ans');
-      for (let i = 0; i <= full.length; i += 3) { box.innerHTML = md(full.slice(0, i)); ov.scrollTop = ov.scrollHeight; await sleep(15); }
-      inp.value = '/btw '; inp.focus(); upd();
+      const c = convs[ci];
+      ov.innerHTML = `<div class="d" style="color:#7d8590;margin-bottom:4px">btw · turn ${c.length}/${c.length}${convs.length > 1 ? ` · #${ci + 1}/${convs.length}` : ''} · Esc close</div>` + c.map((x) => `<div style="color:#7fb3ff">› ${h(x.q)}</div><div style="margin-bottom:8px">${md(x.a)}</div>`).join('') + extra;
+      const last = ov.querySelectorAll('div[style*="7fb3ff"]'); if (last.length) ov.scrollTop = last[last.length - 1].offsetTop - 30; upd();
     };
-    el.querySelector('[data-k=ask]').onclick = ask; inp.onkeydown = (e) => { if (e.key === 'Enter') { e.stopPropagation(); ask(); } };
-    el.querySelector('[data-k=x]').onclick = () => { ov?.remove(); ov = null; upd(); };
+    const close = () => { abort = true; clearInterval(timer); ov?.remove(); ov = null; upd(); };
+    const send = async () => {
+      const raw = inp.value.trim(); if (!raw.startsWith('/btw')) { inp.value = '/btw '; return; }
+      const arg = raw.replace(/^\/btw\s*/, '');
+      if (arg === 'new') { convs.push([]); ci = convs.length - 1; paint('<div class="d">new side conversation</div>'); inp.value = '/btw '; return; }
+      if (arg === 'clear') { convs[ci] = []; paint('<div class="d">conversation cleared</div>'); inp.value = '/btw '; return; }
+      if (arg === 'history') { paint('<div class="d">history:</div>' + convs.map((c, i) => `<div>#${i + 1} ${h(c[0]?.q || '(empty)')}</div>`).join('')); inp.value = '/btw '; return; }
+      if (!arg) return;
+      abort = false; paint(`<div style="color:#7fb3ff">› ${h(arg)}</div><div class="wait d">⠋ thinking… 0s · Esc to abort</div>`);
+      let s = 0; timer = setInterval(() => { s++; const wv = ov?.querySelector('.wait'); if (wv) wv.textContent = `⠋ thinking… ${s}s · Esc to abort`; }, 1000);
+      await sleep(1800); clearInterval(timer); if (abort || !ov) return;
+      convs[ci].push({ q: arg, a: ans(arg) }); paint(); inp.value = '/btw why?'; inp.focus();
+    };
+    el.querySelector('[data-k=ask]').onclick = send; el.querySelector('[data-k=esc]').onclick = close;
+    el.querySelectorAll('[data-q]').forEach((b) => (b.onclick = () => { inp.value = b.dataset.q; send(); }));
+    inp.onkeydown = (e) => { if (e.key === 'Enter') { e.stopPropagation(); send(); } if (e.key === 'Escape') { e.stopPropagation(); close(); } };
+    upd();
   }
 
-  // ---------- clawd-roxy-theme: switch the real APNG states ----------
+  // ---------- clawd-roxy-theme: theme.json state map -> real APNGs ----------
   function roxy(el) {
-    const S = './showcase/roxy-', st = ['idle', 'thinking', 'working', 'sleeping'];
-    el.innerHTML = `<div class="dm pet"><img src="${S}idle.apng" alt="Roxy idle"><div class="row">${st.map((s) => `<button data-s="${s}" class="${s === 'idle' ? 'on' : ''}">${s}</button>`).join('')}<button data-k="sim">▶ simulate an agent task</button></div><div class="mut st">state: idle · click Roxy to poke her</div></div>`;
-    const img = el.querySelector('img'), lab = el.querySelector('.st'); let busy = false, idleT;
-    const set = (s, why = '') => { img.src = S + s + '.apng'; img.alt = 'Roxy ' + s; el.querySelectorAll('[data-s]').forEach((b) => b.classList.toggle('on', b.dataset.s === s)); lab.textContent = 'state: ' + s + (why ? ' · ' + why : ''); clearTimeout(idleT); if (s !== 'sleeping') idleT = setTimeout(() => !busy && set('sleeping', 'no activity for 20s'), 20000); };
+    const S = './showcase/roxy-';
+    const map = { idle: 'idle', thinking: 'thinking', working: 'working', juggling: 'working', sweeping: 'working', carrying: 'working', attention: 'happy', notification: 'notification', error: 'error', sleeping: 'sleeping' };
+    el.innerHTML = `<div class="dm pet"><img src="${S}idle.apng" alt="Roxy idle"><div class="mut st"></div><div class="row" style="justify-content:center">${Object.keys(map).map((s) => `<button data-s="${s}">${s}</button>`).join('')}</div><div class="row" style="justify-content:center"><button data-k="sim">▶ replay a Claude Code session</button></div>${note('Every button is a state key from <code>themes/roxy-chibi/theme.json</code>, showing the APNG that file maps it to (e.g. juggling / sweeping / carrying → <code>roxy-working.apng</code>, attention → <code>roxy-happy.apng</code>). In Clawd on Desk the agent\'s hook events pick the state; here you pick it, or replay a typical sequence.')}</div>`;
+    const img = el.querySelector('img'), lab = el.querySelector('.st');
+    const set = (s) => { img.src = S + map[s] + '.apng'; img.alt = 'Roxy ' + s; lab.innerHTML = `state <b>${s}</b> → roxy-${map[s]}.apng`; el.querySelectorAll('[data-s]').forEach((b) => b.classList.toggle('on', b.dataset.s === s)); };
     el.querySelectorAll('[data-s]').forEach((b) => (b.onclick = () => set(b.dataset.s)));
-    img.onclick = () => set('thinking', 'poked!');
-    el.querySelector('[data-k=sim]').onclick = async (e) => { busy = true; e.target.disabled = true; set('thinking', 'agent is planning'); await sleep(1800); set('working', 'agent is running tools'); await sleep(2600); set('idle', 'task done'); busy = false; e.target.disabled = false; };
+    el.querySelector('[data-k=sim]').onclick = async (e) => { e.target.disabled = true; for (const [s, ms] of [['thinking', 1500], ['working', 2200], ['notification', 1500], ['attention', 1500], ['idle', 1500], ['sleeping', 0]]) { set(s); await sleep(ms); } e.target.disabled = false; };
     set('idle');
   }
 
-  // ---------- Market Survey Awards: the live site, embedded ----------
+  // ---------- Market Survey Awards: the live site ----------
   function msa(el) {
     const U = 'https://tangzy0121.github.io/market-survey-awards/';
-    el.innerHTML = `<div class="dm"><div class="row" style="margin-bottom:6px"><span class="mut">Live site below — scroll, search and open papers right here.</span><span style="flex:1"></span><button data-k="r">↻ reload</button><a href="${U}" target="_blank" rel="noopener" style="color:var(--link)">open in new tab ↗</a></div><iframe src="${U}" title="Market Survey Awards live site" loading="lazy"></iframe></div>`;
-    el.querySelector('[data-k=r]').onclick = () => { const f = el.querySelector('iframe'); f.src = U; };
+    el.innerHTML = `<div class="dm"><div class="row" style="margin-bottom:6px"><span class="mut">The real site, live. Reports, appendices and the 67 defense-video links are all usable here.</span><span style="flex:1"></span><button data-k="r">↻ reload</button><a href="${U}" target="_blank" rel="noopener" style="color:var(--link)">open in new tab ↗</a></div><iframe src="${U}" title="Market Survey Awards live site" loading="lazy"></iframe>${note('Not a mock: this is the deployed GitHub Pages site (built by the repo\'s Actions from a pinned Release, SHA-256 checked). Some defense videos are on Bilibili and may ask for login.')}</div>`;
+    el.querySelector('[data-k=r]').onclick = () => { el.querySelector('iframe').src = U; };
   }
 
   window.__demos = { Folio: folio, Loci: loci, MewCode: mewcode, 'tangzy-btw': btw, 'clawd-roxy-theme': roxy, 'Market Survey Awards': msa };
