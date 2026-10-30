@@ -1,0 +1,46 @@
+// Contract between the shell framework and command modules.
+// The framework knows nothing about markdown or the site's content.
+
+export type FileNode = { type: 'file'; name: string; content: string; pdf?: boolean };
+export type DirNode = { type: 'dir'; name: string; children: Record<string, VNode> };
+export type VNode = FileNode | DirNode;
+
+export type LineKind = 'output' | 'error' | 'dir' | 'success' | 'warning' | 'muted' | 'link';
+export type Part = { text: string; kind?: LineKind };
+
+export interface Context {
+  fs: DirNode;
+  cwd: string[];
+  setCwd(seg: string[]): void;
+  print(text: string, kind?: LineKind): void;
+  printParts(parts: Part[]): void;
+  clear(): void;
+  welcome(): void;
+  /** Start a new "page" (clears screen, pushes history entry). */
+  switchPage(name: string): void;
+  /** Open the pager over the given lines. */
+  page(lines: string[]): void;
+  history: string[];
+  theme: 'light' | 'dark';
+  setTheme(t: 'light' | 'dark'): void;
+  cols: number;
+  rows: number;
+  /** True only for the last stage of a pipeline (output goes to the screen). */
+  tty: boolean;
+  stdin?: string;
+  /** Side-effect hooks (injected so commands stay testable). */
+  openUrl(url: string): void;
+  copy(text: string): Promise<boolean>;
+  openCV(): void;
+}
+
+export interface Command {
+  name: string;
+  desc: string;
+  group: 'Navigation' | 'Filesystem' | 'Text' | 'Shell';
+  /** Document command: shown in Navigation, not listed in /bin. */
+  doc?: boolean;
+  /** Hidden from help and /bin (e.g. aliases). */
+  hidden?: boolean;
+  run(argv: string[], ctx: Context): void;
+}

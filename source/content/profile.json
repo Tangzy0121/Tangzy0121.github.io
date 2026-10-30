@@ -1,0 +1,30 @@
+{
+  "name": "Tang Zhengyu",
+  "nameZh": "唐政宇",
+  "handle": "tang",
+  "role": "Undergraduate Researcher",
+  "affiliation": "Harbin Institute of Technology",
+  "affiliationShort": "HIT",
+  "interests": ["Database Systems", "ML4CO", "AI Safety", "Scientific ML"],
+  "tagline": "I work on reliable and scalable intelligent systems.",
+  "focus": "Reliable and scalable intelligent systems",
+  "email": "tangzy0121@gmail.com",
+  "location": "Harbin, China",
+  "site": "tangzy.dev",
+  "lastUpdate": "2026-09-30",
+  "links": {
+    "github": { "label": "GitHub", "url": "https://github.com/tangzy0121" },
+    "scholar": { "label": "Google Scholar", "url": "https://scholar.google.com/citations?user=SQIsoDwAAAAJ" }
+  },
+  "pages": {
+    "bio": "about.md",
+    "research": "research/README.md",
+    "projects": "projects/README.md",
+    "papers": "publications/README.md",
+    "awards": "awards.md",
+    "education": "education.md",
+    "contact": "contact.md"
+  },
+  "aliases": { "about": "bio", "publications": "papers", "google": "scholar", "gs": "scholar", "gh": "github", "mail": "email", "copy": "email" },
+  "phrases": { "google scholar": "scholar" }
+}
