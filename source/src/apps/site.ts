@@ -5,7 +5,7 @@ import { profile } from '../generated/content';
 export const cv: Command = {
   name: 'cv', desc: 'Open CV', group: 'Navigation',
   run(_a, ctx) {
-    if (ctx.tty) ctx.switchPage('cv');
+    // Modal only: no page switch and no #cv route; the current view stays underneath.
     ctx.print('Opening ~/cv.pdf in viewer… (esc to close)', 'muted');
     ctx.openCV();
   },

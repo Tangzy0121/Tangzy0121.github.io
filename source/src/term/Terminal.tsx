@@ -23,7 +23,8 @@ type Line =
 type NewLine = Line extends infer L ? (L extends Line ? Omit<L, 'id'> : never) : never;
 
 /** Commands that are addressable as #hash pages. */
-const ROUTES = new Set([...pageNames, 'cv', 'help']);
+/** The CV / paper viewers are modals and never get a route; a legacy #cv link opens the modal once and is stripped. */
+const ROUTES = new Set([...pageNames, 'help']);
 const THEME_KEY = 'tang-shell-theme';
 const ONBOARD_KEY = 'tang-shell-onboarded';
 /** Commands whose long output opens the pager automatically (like `git log` with a pager). */
