@@ -31,6 +31,8 @@ export function docCommands(getFs: () => DirNode): Command[] {
       if (ctx.tty) ctx.switchPage(name);
       const r = resolve(getFs(), [], path);
       if (r?.node.type === 'file') ctx.print(r.node.content);
+      // Papers behaves like cv: the list stays in the terminal and the PDF gallery opens on top.
+      if (name === 'papers' && ctx.tty) ctx.openPaper?.(0);
     },
   }));
 }

@@ -38,6 +38,8 @@ export interface Context {
   openUrl(url: string): void;
   copy(text: string): Promise<boolean>;
   openCV(): void;
+  /** Open paper #i (0-based) in the PDF gallery; false if there is no such paper. */
+  openPaper?(i: number): boolean;
   /** Offer a corrected command line for the next prompt (Tab/→ accepts). */
   suggest?(line: string): void;
 }
