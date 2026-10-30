@@ -12,6 +12,10 @@ export interface Context {
   fs: DirNode;
   cwd: string[];
   setCwd(seg: string[]): void;
+  /** Previous directory for `cd -` (OLDPWD). */
+  oldCwd?: string[];
+  /** Current page name (for `share`), if any. */
+  route?: string;
   print(text: string, kind?: LineKind): void;
   printParts(parts: Part[]): void;
   clear(): void;

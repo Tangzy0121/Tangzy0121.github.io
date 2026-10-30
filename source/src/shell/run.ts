@@ -2,6 +2,7 @@ import type { Context } from './types';
 import type { Registry } from './registry';
 import { splitPipe, tokenize } from './parser';
 import { didYouMean } from './fuzzy';
+import { resolve } from './vfs';
 
 /** Execute a pipeline. Non-final stages write into a buffer that becomes the next stage's stdin. */
 export function runLine(line: string, reg: Registry, ctx: Context, phrases: Record<string, string> = {}): void {
@@ -14,6 +15,10 @@ export function runLine(line: string, reg: Registry, ctx: Context, phrases: Reco
     if (argv.length === 0) return ctx.print('syntax error: empty command in pipeline', 'error');
     const [name, ...args] = argv;
     const cmd = reg.get(name) ?? reg.get(name.replace(/^(\/|~\/)?bin\//, ''));
+    // zsh-style AUTO_CD: a bare directory (`..`, `~`, `projects/`, `-`) changes into it.
+    if (!cmd && args.length === 0 && stages.length === 1 && (name === '-' || resolve(ctx.fs, ctx.cwd, name)?.node.type === 'dir')) {
+      return reg.get('cd')!.run([name], { ...ctx, stdin });
+    }
     if (!cmd) {
       ctx.print(`command not found: ${name}`, 'error');
       const fix = didYouMean(name, [...reg.names(), ...Object.keys(phrases)]);

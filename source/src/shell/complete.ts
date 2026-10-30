@@ -82,3 +82,14 @@ export function ghost(line: string, words: string[], phrases: string[], root: Di
   if (c.next.toLowerCase().startsWith(line.toLowerCase())) return c.next.slice(line.length).trimEnd();
   return `  → ${c.next.trim()}?`;
 }
+
+/** Put one candidate from a completion menu into the line (replaces the word being completed). */
+export function applyCandidate(line: string, cand: string): string {
+  if (cand.includes(' ')) return `${cand} `;
+  const parts = line.trimStart().split(/\s+/);
+  if (/\s$/.test(line)) parts.push('');
+  const last = parts.pop() ?? '';
+  const base = parts.length ? last.slice(0, last.lastIndexOf('/') + 1) : '';
+  parts.push(base + cand + (cand.endsWith('/') ? '' : ' '));
+  return parts.join(' ');
+}

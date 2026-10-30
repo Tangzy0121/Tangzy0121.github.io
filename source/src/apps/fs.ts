@@ -16,12 +16,24 @@ function layout(names: string[], cols: number) {
 
 export const ls: Command = {
   name: 'ls', desc: 'List files', group: 'Filesystem',
-  run([p], ctx) {
+  run(args, ctx) {
+    const long = args.some((a) => /^-\w*l/.test(a));
+    const p = args.find((a) => !a.startsWith('-'));
     const r = resolve(ctx.fs, ctx.cwd, p);
     if (!r) return ctx.print(`ls: cannot access '${p}': No such file or directory`, 'error');
     if (r.node.type === 'file') return ctx.print(r.node.name);
     const items = Object.values(r.node.children).map((c) => ({ name: c.type === 'dir' ? `${c.name}/` : c.name, dir: c.type === 'dir' }));
     if (!items.length) return ctx.print('(empty)', 'muted');
+    if (long) {
+      for (const c of Object.values(r.node.children)) {
+        const size = c.type === 'dir' ? Object.keys(c.children).length : c.pdf ? 135120 : new TextEncoder().encode(c.content).length;
+        ctx.printParts([
+          { text: `${c.type === 'dir' ? 'drwxr-xr-x' : '-rw-r--r--'}  tang  ${String(size).padStart(6)}  `, kind: 'muted' },
+          { text: c.type === 'dir' ? `${c.name}/` : c.name, kind: c.type === 'dir' ? 'dir' : undefined },
+        ]);
+      }
+      return;
+    }
     if (!ctx.tty) return ctx.print(items.map((i) => i.name).join('\n'));
     const L = layout(items.map((i) => i.name), ctx.cols);
     for (let row = 0; row < L.rows; row++) {
@@ -40,6 +52,11 @@ export const ls: Command = {
 export const cd: Command = {
   name: 'cd', desc: 'Change directory', group: 'Filesystem',
   run([p = '~'], ctx) {
+    if (p === '-') {
+      if (!ctx.oldCwd) return ctx.print('cd: OLDPWD not set', 'error');
+      ctx.print(pathString(ctx.oldCwd), 'dir');
+      return ctx.setCwd(ctx.oldCwd);
+    }
     const r = resolve(ctx.fs, ctx.cwd, p);
     if (!r) return ctx.print(`cd: no such file or directory: ${p}`, 'error');
     if (r.node.type !== 'dir') return ctx.print(`cd: not a directory: ${p}`, 'error');
@@ -88,3 +105,5 @@ export const tree: Command = {
     walk(r.node, '');
   },
 };
+
+export const ll: Command = { name: 'll', desc: 'ls -l', group: 'Filesystem', run: (a, ctx) => ls.run(['-l', ...a], ctx) };

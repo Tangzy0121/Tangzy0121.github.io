@@ -28,3 +28,16 @@ function external(name: 'github' | 'scholar', desc: string): Command {
 }
 export const github = external('github', 'Open GitHub profile');
 export const scholar = external('scholar', 'Open Google Scholar');
+
+/** Commands that must not auto-run from a shared link (popups, clipboard, state changes). */
+export const NO_DEEPLINK = new Set(['github', 'scholar', 'email', 'exit', 'clear', 'theme', 'share', 'history']);
+
+export const share: Command = {
+  name: 'share', desc: 'Copy a link to this page or a command', group: 'Navigation',
+  run(args, ctx) {
+    const what = args.join(' ') || ctx.route || '';
+    const url = `${location.origin}${location.pathname}${what ? `#${encodeURIComponent(what)}` : ''}`;
+    ctx.print(url, 'link');
+    void ctx.copy(url).then((ok) => ok && ctx.print('link copied ✓', 'muted'));
+  },
+};
