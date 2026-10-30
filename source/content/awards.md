@@ -1,9 +1,10 @@
 # Awards
 
 ## Selected honors
-- 2025 :: National Scholarship, Ministry of Education
-- 2025 :: Meritorious Winner, MCM/ICM
-- 2024 :: First-Class Scholarship, Harbin Institute of Technology
+- 2026 :: MCM · Honorable Mention
+- 2025 :: HIT People's Scholarship (人民奖学金) · Second Class · Autumn 2025 / Spring 2025
+- 2024 :: HIT People's Scholarship (人民奖学金) · Third Class · Autumn 2024
+- 2025 :: National College Students 5-Minute Research Presentation (5MRP) · Grand Prize
 
 ## Certificates
 >> All 26 certificates · text list below · [▦ open certificate hall](cmd:certs) for thumbnails and full-size view (esc to close)
