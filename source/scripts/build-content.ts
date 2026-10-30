@@ -3,6 +3,16 @@
 import { readFileSync, readdirSync, statSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execSync } from 'node:child_process';
+
+// Last update = date of the latest git commit (like a static site rebuilt from its repo); today if git is unavailable.
+export function lastUpdate(cwd: string): string {
+  try {
+    return execSync('git log -1 --format=%cs', { cwd, encoding: 'utf8' }).trim() || new Date().toISOString().slice(0, 10);
+  } catch {
+    return new Date().toISOString().slice(0, 10);
+  }
+}
 
 type Tree = { [name: string]: Tree | string };
 
@@ -49,6 +59,7 @@ function main() {
   const root = join(dirname(fileURLToPath(import.meta.url)), '..');
   const contentDir = join(root, 'content');
   const profile = JSON.parse(readFileSync(join(contentDir, 'profile.json'), 'utf8'));
+  profile.lastUpdate = lastUpdate(root);
   const tree = walk(contentDir);
   const errs = validate(tree, profile);
   if (errs.length) {

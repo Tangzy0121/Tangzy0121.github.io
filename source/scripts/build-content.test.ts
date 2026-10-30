@@ -10,3 +10,8 @@ test('validate flags dead and broken cmd links', () => {
 test('validate passes good content', () => {
   assert.deepEqual(validate({ 'a.md': '[b](cmd:cat ~/b.md)', 'b.md': '' }, { pages: { a: 'a.md' } }), []);
 });
+
+import { lastUpdate } from './build-content.ts';
+test('lastUpdate is a YYYY-MM-DD git commit date', () => {
+  assert.match(lastUpdate(process.cwd()), /^\d{4}-\d{2}-\d{2}$/);
+});
