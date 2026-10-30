@@ -159,6 +159,11 @@ export function Terminal() {
       setCwd: (seg) => { setOldCwd(cwd); setCwd(seg); },
       print: (text, kind = 'output') => emit(text.split('\n').map((t) => ({ type: 'output' as const, text: t, kind }))),
       printParts: (parts) => emit([{ type: 'parts', parts }]), clear, welcome, switchPage,
+      home: () => {
+        setLines([]); scrollTop.current = true; setOldCwd(cwd); setCwd([]); welcome();
+        route.current = undefined; document.title = `~${profile.handle}`;
+        if (window.location.hash && !fromPop.current) window.history.pushState({}, '', window.location.pathname + window.location.search);
+      },
       page: setPager, history: history.current, theme, setTheme: setThemeState, cols: cols.current, rows: rows.current, tty: true,
       openUrl: (u) => window.open(u, '_blank', 'noopener'),
       copy: copyText,

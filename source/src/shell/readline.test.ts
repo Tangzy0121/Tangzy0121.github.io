@@ -52,3 +52,13 @@ test('autocd, cd -, ll', () => {
   out.length = 0; runLine('ll', reg, ctx(), phrases);
   assert.ok(out.some((l) => /^drwxr-xr-x .*projects\/$/.test(l)), out.join('\n'));
 });
+test('home and exit both return home, case-insensitive, completable', () => {
+  const { reg, fs, phrases } = createShell();
+  for (const cmd of ['home', 'HOME', 'exit', 'Exit']) {
+    let homed = 0;
+    const ctx = { fs, cwd: ['projects'], setCwd() {}, print() {}, printParts() {}, clear() {}, welcome() {}, switchPage() {}, page() {}, history: [], theme: 'light', setTheme() {}, cols: 80, rows: 24, tty: false, openUrl() {}, copy: async () => true, openCV() {}, home: () => { homed++; } } as Context;
+    runLine(cmd, reg, ctx, phrases);
+    assert.equal(homed, 1, cmd);
+  }
+  assert.ok(reg.names().includes('home'));
+});

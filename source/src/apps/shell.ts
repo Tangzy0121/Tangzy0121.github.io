@@ -15,7 +15,7 @@ export function helpText(reg: Registry): string {
     out.push('');
   }
   out.push('Tips', '  Tab completes commands, links and paths (case-insensitive); → accepts the grey hint.',
-    '  Pipes: cat bio | grep -i safety · History: ↑/↓ · Ctrl-L clear · Ctrl-C cancel · Ctrl-D (empty) home');
+    '  Pipes: cat bio | grep -i safety · History: ↑/↓ · Ctrl-L clear · Ctrl-C cancel · home / exit / Ctrl-D (empty) back to home');
   return out.join('\n');
 }
 
@@ -37,10 +37,13 @@ export const history: Command = {
 
 export const clear: Command = { name: 'clear', desc: 'Clear terminal', group: 'Shell', run: (_a, ctx) => ctx.clear() };
 
-export const exit: Command = {
-  name: 'exit', desc: 'Return to home screen (Ctrl-D)', group: 'Shell',
-  run: (_a, ctx) => { ctx.clear(); ctx.setCwd([]); ctx.welcome(); },
+const goHome: Command['run'] = (_a, ctx) => {
+  if (ctx.home) return ctx.home();
+  ctx.clear(); ctx.setCwd([]); ctx.welcome();
 };
+/** `home` and `exit` are the same action: back to the welcome screen at ~ (Ctrl-D on an empty line too). */
+export const home: Command = { name: 'home', desc: 'Back to the home screen', group: 'Shell', run: goHome };
+export const exit: Command = { name: 'exit', desc: 'Back to the home screen (same as home, Ctrl-D)', group: 'Shell', run: goHome };
 
 export const echo: Command = { name: 'echo', desc: 'Print arguments', group: 'Shell', run: (a, ctx) => ctx.print(a.join(' ')) };
 

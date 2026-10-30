@@ -16,6 +16,8 @@ export interface Context {
   oldCwd?: string[];
   /** Current page name (for `share`), if any. */
   route?: string;
+  /** Reset to the home screen: clear, cd ~, welcome banner, and drop any #page from the URL. */
+  home?: () => void;
   print(text: string, kind?: LineKind): void;
   printParts(parts: Part[]): void;
   clear(): void;
