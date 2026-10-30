@@ -5,8 +5,8 @@
   const WORKER = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs';
   // Only real, public files. A paper without `url` shows an honest "not public yet" panel.
   const PAPERS = [
-    { id: 'asimov-cascade', title: 'Detecting Cascading Safety Failures in Humanoid Robotic Subsystems', venue: 'ICRA 2027 · Under Review',
-      url: './papers/asimov-cascade.pdf' },
+    { id: 'asimov-cascade', title: 'Asimov Cascade Monitoring in Humanoid Robotics: An Evidence-Gated Technology Management Framework with Quantification', venue: 'ICRA 2027 · Under Review',
+      url: null /* under review: manuscript is NOT shipped publicly; future exports come from the Overleaf main version only */ },
   ];
   const CV = { url: './cv.pdf', title: '~/cv.pdf', label: 'Curriculum vitae viewer',
     pending: '<div><span class="w">cv.pdf</span> is not published yet.</div><div class="m">Meanwhile: try <b>bio</b>, <b>projects</b>, <b>awards</b> or <b>contact</b>.</div>' };
