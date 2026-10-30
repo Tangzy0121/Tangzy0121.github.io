@@ -57,7 +57,14 @@ export function MdLine({ text, kind = 'output', run }: { text: string; kind?: Li
         <div className="md-h1-divider" aria-hidden="true">{'─'.repeat(h[2].length)}</div>
       </div>
     );
-  if (h) return <div className="whitespace-pre-wrap break-words font-medium">{inline(h[2], run)}</div>;
+  if (h) return <div className="md-h2"><span className="md-h2-mark" aria-hidden="true">▍</span>{inline(h[2], run)}</div>;
+  const chip = text.match(/^- (.+?) :: (.*)$/);
+  if (chip)
+    return <div className="md-chip-row"><span className="md-chip">{inline(chip[1], run)}</span><span className="md-chip-text">{inline(chip[2], run)}</span></div>;
+  if (/^\d\d  /.test(text)) return <div className="whitespace-pre-wrap break-words md-item">{inline(text, run)}</div>;
+  if (/^\s+Status: /.test(text)) return <div className="whitespace-pre-wrap break-words text-warn">{inline(text, run)}</div>;
+  if (text.startsWith('>> '))
+    return <div className="md-lead">{inline(text.slice(3), run)}</div>;
   if (text.startsWith('> '))
     return <div className="whitespace-pre-wrap break-words"><span className="md-quote">│ </span>{inline(text.slice(2), run)}</div>;
   const li = text.startsWith('- ') || text.startsWith('* ');

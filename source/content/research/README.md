@@ -1,9 +1,12 @@
 # Research
 
 ## Summary
-I care about one question: how to make intelligent systems reliable and scalable enough to trust in practice.
-I pursue it across four areas: database systems, machine learning for combinatorial optimization (ML4CO), AI safety, and scientific machine learning.
-In databases I study learned components and their failure modes, especially cardinality estimation. In ML4CO I scale solving through decomposition and solver routing. In AI safety I study how failures cascade across interacting robotic subsystems. In scientific ML I am interested in operator learning (PINNs, DeepONet, FNO) as fast, differentiable surrogates.
+>> How do we make intelligent systems reliable and scalable enough to trust in practice?
+I pursue this question across four areas:
+- Database Systems :: learned components and their failure modes, especially cardinality estimation
+- ML4CO :: scaling combinatorial optimization through decomposition and solver routing
+- AI Safety :: how failures cascade across interacting robotic subsystems
+- Scientific ML :: operator learning (PINNs, DeepONet, FNO) as fast, differentiable surrogates
 
 ## Research topics
 

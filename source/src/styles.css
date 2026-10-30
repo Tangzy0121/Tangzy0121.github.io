@@ -29,3 +29,11 @@
   .term-window:after{display:none}
   body{transition:none}
 }
+
+.md-h2{margin:1.1em 0 .35em;font-weight:600;color:var(--path);letter-spacing:.04em;white-space:pre-wrap;overflow-wrap:break-word}.md-h2-mark{color:var(--link);margin-right:.35em}
+.md-lead{margin:.2em 0 .7em;padding:.55em .9em;border-left:3px solid var(--link);background:color-mix(in srgb,var(--link) 7%,transparent);border-radius:0 6px 6px 0;font-size:1.08em;line-height:1.5}
+.md-chip-row{display:grid;grid-template-columns:13.5em 1fr;gap:.25em 1em;align-items:baseline;padding:.3em 0;border-bottom:1px dashed color-mix(in srgb,var(--border) 70%,transparent)}
+.md-chip{justify-self:start;padding:.05em .6em;border:1px solid var(--border);border-radius:999px;color:var(--link);font-size:.9em;white-space:nowrap}
+.md-chip-text{color:var(--text)}
+.md-item{margin-top:.55em}
+@media(max-width:639px){.md-chip-row{grid-template-columns:1fr}.md-lead{font-size:1em}}
