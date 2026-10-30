@@ -6,7 +6,7 @@
   // Only real, public files. A paper without `url` shows an honest "not public yet" panel.
   const PAPERS = [
     { id: 'asimov-cascade', title: 'Asimov Cascade Monitoring in Humanoid Robotics: An Evidence-Gated Technology Management Framework with Quantification', venue: 'ICRA 2027 · Under Review',
-      url: null /* under review: manuscript is NOT shipped publicly; future exports come from the Overleaf main version only */ },
+      url: './papers/asimov-cascade-anon.pdf' /* anonymized review copy only */ },
   ];
   const CV = { url: './cv.pdf', title: '~/cv.pdf', label: 'Curriculum vitae viewer',
     pending: '<div><span class="w">cv.pdf</span> is not published yet.</div><div class="m">Meanwhile: try <b>bio</b>, <b>projects</b>, <b>awards</b> or <b>contact</b>.</div>' };
@@ -56,7 +56,7 @@
   window.__openCV = () => window.__openPDF(CV);
   window.__papers = PAPERS.map(({id,title,venue})=>({id,title,venue}));
   window.__openPaper = (i = 0) => { const p = PAPERS[i]; if(!p) return false;
-    window.__openPDF({ url: p.url, title: `~/papers/${p.id}.pdf — ${p.title}`, label: `Paper viewer: ${p.title}`,
+    window.__openPDF({ url: p.url, title: `~/papers/${p.id}-anon.pdf — ${p.title}`, label: `Paper viewer: ${p.title}`,
       pending: `<div class="h">${p.title}</div><div class="m">${p.venue}</div><br><div><span class="w">${p.id}.pdf</span> is not public yet.</div><div class="m">The manuscript is under review; the PDF will appear here as a browsable gallery once it is released.</div><div class="m">Meanwhile: <b>scholar</b> · <b>projects</b> · <b>cat projects/asimov-cascade</b></div>` });
     return true; };
 })();

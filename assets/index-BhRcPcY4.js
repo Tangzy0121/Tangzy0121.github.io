@@ -193,9 +193,9 @@ I designed the benchmark and the evaluation framework, and ran the full experime
 - Manuscript drafting`}},publications:{"README.md":`# Publications
 
 1. Asimov Cascade Monitoring in Humanoid Robotics: An Evidence-Gated Technology Management Framework with Quantification
-   Usharani Hareesh Govindarajan, Zhengyu Tang, Sungjoo Lee, Arash Hajikhani, Gagan Narang, Raphael Loridan, Adriano Mancini
+   Anonymous submission (double-blind review copy)
    ICRA 2027 · Under Review
-   Manuscript under review.
+   Manuscript under review · anonymized version.
    [▣ open in viewer](cmd:paper 1)`},research:{"README.md":`# Research
 
 01  Database Systems

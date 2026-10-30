@@ -3,3 +3,4 @@ dist/
 
 # Under-review manuscripts must never be published
 public/papers/*.pdf
+!public/papers/asimov-cascade-anon.pdf
