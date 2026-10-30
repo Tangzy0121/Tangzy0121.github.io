@@ -39,6 +39,21 @@
 #scv .room{display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start}#scv aside{display:flex;flex-direction:column;gap:10px}#scv aside p{margin:0;line-height:1.7;font-size:13.5px}#scv aside .nm{font-size:20px;color:var(--path)}#scv .pv{border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;justify-content:center;gap:2px}#scv .pv img{max-width:100%;display:block}#scv section{border:1px solid var(--border);border-radius:10px;padding:14px;min-width:0}#scv .dh{color:var(--path);margin-bottom:10px}#scv .ph{padding:40px;color:var(--muted);text-align:center;line-height:1.8}
 @media (max-width:820px){#scv .room{grid-template-columns:1fr}#scv section{order:-1;padding:8px}}
 #scv .src{color:var(--faint);font-size:12px}
+#scv .grid.bento{grid-template-columns:repeat(4,1fr);grid-auto-flow:dense}
+#scv .grid.bento .card.big{grid-column:span 2}#scv .grid.bento .card.big .th{height:220px}
+#scv .card{transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,border-color .25s;animation:scvIn .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--k,0)*55ms)}
+#scv .card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,.14);border-color:var(--link)}
+#scv .card .th img{transition:transform .5s cubic-bezier(.2,.8,.2,1)}#scv .card:hover .th img{transform:scale(1.04)}
+#scv .card .num{position:absolute;top:8px;left:10px;font-size:11px;color:#fff;background:rgba(0,0,0,.55);border-radius:4px;padding:1px 6px}#scv .card .th{position:relative}
+#scv .card .try{font-size:11.5px;color:var(--link);opacity:.0;transition:opacity .2s}#scv .card:hover .try,#scv .card:focus-visible .try{opacity:1}
+#scv .boot{font-size:12.5px;color:var(--muted);margin:-4px 0 12px}#scv .boot b{color:var(--path);font-weight:400}
+#scv .room{animation:scvRoom .45s cubic-bezier(.2,.8,.2,1) both}
+#scv .pn{display:flex;justify-content:space-between;gap:10px;margin-top:16px;border-top:1px solid var(--border);padding-top:12px}#scv .pn button{max-width:48%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@keyframes scvIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes scvRoom{from{opacity:0;transform:translateX(var(--dx,24px))}to{opacity:1;transform:none}}
+@media (max-width:900px){#scv .grid.bento{grid-template-columns:1fr 1fr}#scv .grid.bento .card.big .th{height:150px}}
+@media (max-width:640px){#scv .card .try{opacity:1}}
+@media (prefers-reduced-motion:reduce){#scv .card,#scv .room{animation:none}#scv .card,#scv .card .th img{transition:none}}
 @media (max-width:640px){#scv .win{width:100vw;height:100vh;height:100dvh;border-radius:0;border:0}#scv .hint{display:none}#scv .body{padding:10px}#scv .grid{grid-template-columns:1fr 1fr;gap:8px}#scv .card .th{height:90px}#scv .card .bl{display:none}#scv .demo figure img{width:110px}}`;
   let root, cur = -1;
   const $ = (s) => root.querySelector(s);
@@ -49,19 +64,21 @@
     if (p.img.length > 1) return `<div class="th">${p.img.map((u) => `<img class="sm" src="${u}" alt="" loading="lazy">`).join('')}</div>`;
     return `<div class="th"><img src="${p.img[0]}" alt="${esc(p.n)} preview" loading="lazy"></div>`;
   }
-  const card = (p, i) => `<button class="card" data-i="${i}" aria-label="${esc(p.n)}">${thumb(p)}<div class="c"><span class="nm">${esc(p.n)}</span><span class="tg">${esc(p.tag)}</span>${p.status ? `<span class="st">${esc(p.status)}</span>` : ''}<span class="bl">${esc(p.blurb)}</span></div></button>`;
+  const BIG = new Set(['Folio', 'MewCode']);
+  const card = (p, i, k = 0) => `<button class="card${BIG.has(p.n) ? ' big' : ''}" style="--k:${k}" data-i="${i}" aria-label="${esc(p.n)}">${thumb(p).replace('<div class="th">', `<div class="th"><span class="num">${String(i + 1).padStart(2, '0')}</span>`)}<div class="c"><span class="nm">${esc(p.n)}</span><span class="tg">${esc(p.tag)}</span>${p.status ? `<span class="st">${esc(p.status)}</span>` : ''}<span class="bl">${esc(p.blurb)}</span><span class="try">${window.__demos?.[p.n] ? '▶ enter demo room' : '→ open'}</span></div></button>`;
   function gallery() {
     cur = -1; $('.t').textContent = '~/projects · showcase'; $('[data-a=back]').style.display = 'none';
     const r = P.map((p, i) => [p, i]).filter(([p]) => p.tag.startsWith('Research')), o = P.map((p, i) => [p, i]).filter(([p]) => !p.tag.startsWith('Research'));
-    $('.body').innerHTML = `<h3>Personal projects · click a card to enter its demo room</h3><div class="grid">${o.map(([p, i]) => card(p, i)).join('')}</div><h3>Research</h3><div class="grid">${r.map(([p, i]) => card(p, i)).join('')}</div>`;
+    $('.body').innerHTML = `<div class="boot"><b>tang:~/projects$</b> ls --demos · ${o.length} playable rooms · ${r.length} research</div><h3>Personal projects · click a card to enter its demo room</h3><div class="grid bento">${o.map(([p, i], k) => card(p, i, k)).join('')}</div><h3>Research</h3><div class="grid">${r.map(([p, i], k) => card(p, i, k + o.length)).join('')}</div>`;
     $('.body').scrollTop = 0;
   }
-  function detail(i) {
+  function detail(i, dx = 24) {
     const p = P[i]; cur = i; $('.t').textContent = `~/projects/${p.n} · demo room · ${i + 1}/${P.length}`; $('[data-a=back]').style.display = '';
     const mount = window.__demos?.[p.n];
     const links = (p.links || []).map((l) => `<a class="b" href="${l.u}" target="_blank" rel="noopener">${esc(l.t)} ↗</a>`).join('') + (p.paper != null ? `<button data-a="paper">▣ read paper</button>` : '');
     const asset = p.img ? (p.caps ? `<div class="pv">${p.img.map((u) => `<img src="${u}" alt="" style="width:23%">`).join('')}</div>` : `<div class="pv"><img src="${p.img[0]}" alt="${esc(p.n)} preview"></div>`) : '';
-    $('.body').innerHTML = `<div class="room"><aside><span class="nm">${p.icon ? `<img src="${p.icon}" alt="" style="width:28px;vertical-align:middle;margin-right:8px">` : ''}${esc(p.n)}</span><span class="tg">${esc(p.tag)}</span>${p.status ? `<span class="st">${esc(p.status)}</span>` : ''}<p>${esc(p.blurb)}</p><div class="lk">${links || '<span class="tg">Source not public yet.</span>'}</div>${asset}${p.src ? `<span class="src">image: ${esc(p.src)}</span>` : ''}</aside><section><div class="dh">${mount ? '▶ Try it' : 'Demo'}</div><div class="stage2">${mount ? '' : `<div class="ph">Research project — no public demo yet, so there is nothing interactive here.${p.paper != null ? '<br>The paper (anonymized review copy) is readable with the button on the left.' : '<br>Details: type <b>projects</b> in the terminal.'}</div>`}</div></section></div>`;
+    const pv = P[(i - 1 + P.length) % P.length], nx = P[(i + 1) % P.length];
+    $('.body').innerHTML = `<div class="boot"><b>tang:~/projects$</b> cd ${esc(p.n.toLowerCase().replace(/\s+/g, '-'))} &amp;&amp; ./demo</div><div class="room" style="--dx:${dx}px"><aside><span class="nm">${p.icon ? `<img src="${p.icon}" alt="" style="width:28px;vertical-align:middle;margin-right:8px">` : ''}${esc(p.n)}</span><span class="tg">${esc(p.tag)}</span>${p.status ? `<span class="st">${esc(p.status)}</span>` : ''}<p>${esc(p.blurb)}</p><div class="lk">${links || '<span class="tg">Source not public yet.</span>'}</div>${asset}${p.src ? `<span class="src">image: ${esc(p.src)}</span>` : ''}</aside><section><div class="dh">${mount ? '▶ Try it' : 'Demo'}</div><div class="stage2">${mount ? '' : `<div class="ph">Research project — no public demo yet, so there is nothing interactive here.${p.paper != null ? '<br>The paper (anonymized review copy) is readable with the button on the left.' : '<br>Details: type <b>projects</b> in the terminal.'}</div>`}</div></section></div><div class="pn"><button data-a="pv">← ${esc(pv.n)}</button><button data-a="nx">${esc(nx.n)} →</button></div>`;
     if (mount) try { mount($('.stage2')); } catch (err) { $('.stage2').textContent = 'demo failed to load'; }
     $('.body').scrollTop = 0;
   }
@@ -70,8 +87,8 @@
     const typing = e.target.closest?.('input,textarea,[contenteditable=true]');
     if (typing && e.key !== 'Escape') return;
     if (e.key === 'Escape' || e.key === 'q') cur >= 0 ? gallery() : close();
-    else if (cur >= 0 && e.key === 'ArrowRight') detail((cur + 1) % P.length);
-    else if (cur >= 0 && e.key === 'ArrowLeft') detail((cur - 1 + P.length) % P.length);
+    else if (cur >= 0 && e.key === 'ArrowRight') detail((cur + 1) % P.length, 24);
+    else if (cur >= 0 && e.key === 'ArrowLeft') detail((cur - 1 + P.length) % P.length, -24);
     else return;
     e.preventDefault(); e.stopPropagation();
   }
@@ -84,7 +101,7 @@
     root.addEventListener('click', (e) => {
       if (e.target === root) return close();
       const a = e.target.closest('[data-a]')?.dataset.a;
-      if (a === 'close') return close(); if (a === 'back') return gallery();
+      if (a === 'close') return close(); if (a === 'pv') return detail((cur - 1 + P.length) % P.length, -24); if (a === 'nx') return detail((cur + 1) % P.length, 24); if (a === 'back') return gallery();
       if (a === 'paper') { const k = P[cur].paper; close(); return window.__openPaper?.(k); }
       const c = e.target.closest('.card'); if (c) detail(+c.dataset.i);
     });
