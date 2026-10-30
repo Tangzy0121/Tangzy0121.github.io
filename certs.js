@@ -7,7 +7,7 @@
     ['2025.05', 'CCPC 2025 全国邀请赛（东北）', '优胜奖 · Honorable Mention', 'c'],
     ['2025.05', '第 19 届东北地区大学生程序设计竞赛', '铜牌 · Bronze Medal', 'c'],
     ['2025', '哈工大基础学部 2024–2025 年度五四表彰', '优秀团员', 'h'],
-    ['2025.06', '2025“拓竹杯”哈尔滨工业大学 3D 造物大赛', '二等奖', 'c'],
+    ['2025.06', '2025“拓竹杯”暨首届“新睿创新”杯 3D 造物大赛', '二等奖', 'c'],
     ['2025.07', '大一年度项目计划 · 基于 Jetson Nano 和 YOLO 的定时定位系统', '二等奖', 'c'],
     ['2025.08', '2025 全国大学生 5 分钟科研英语演讲（5MRP）', '全国特等奖 · Grand Prize', 'c'],
     ['2025.09', '2025 大学生“AI+信息素养”大赛 · 哈工大校赛', '三等奖', 'c'],
@@ -56,7 +56,7 @@
   const list = () => ORDER.filter((i) => filt === 'all' || C[i].k === filt);
   function gallery() {
     const L = list();
-    $('.body').innerHTML = `<div class="boot"><b>tang:~/awards$</b> ls certificates/ · ${C.length} certificates</div><h3>Certificates · click to view full size</h3><div class="fl">${[['all', 'all'], ['c', 'competitions'], ['h', 'scholarships & honors']].map(([k, l]) => `<button data-f="${k}" class="${filt === k ? 'on' : ''}">${l} (${k === 'all' ? C.length : C.filter((x) => x.k === k).length})</button>`).join('')}</div><div class="grid">${L.map((i, k) => { const c = C[i]; return `<button class="card" style="--k:${k}" data-i="${i}" aria-label="${esc(c.t + ' ' + c.l)}"><div class="th"><span class="num">${c.d}</span><img src="./awards/${c.n}-t.jpg" alt="${esc(c.t)} certificate" loading="lazy"></div><div class="c"><span class="nm">${esc(c.t)}</span><span class="lv">${esc(c.l)}</span></div></button>`; }).join('')}</div>`;
+    $('.body').innerHTML = `<div class="boot"><b>tang:~/awards$</b> ls certificates/ · ${C.length} certificates · terminal lists all · hall = GUI</div><h3>Certificates · click to view full size</h3><div class="fl">${[['all', 'all'], ['c', 'competitions'], ['h', 'scholarships & honors']].map(([k, l]) => `<button data-f="${k}" class="${filt === k ? 'on' : ''}">${l} (${k === 'all' ? C.length : C.filter((x) => x.k === k).length})</button>`).join('')}</div><div class="grid">${L.map((i, k) => { const c = C[i]; return `<button class="card" style="--k:${k}" data-i="${i}" aria-label="${esc(c.t + ' ' + c.l)}"><div class="th"><span class="num">${c.d}</span><img src="./awards/${c.n}-t.jpg" alt="${esc(c.t)} certificate" loading="lazy"></div><div class="c"><span class="nm">${esc(c.t)}</span><span class="lv">${esc(c.l)}</span></div></button>`; }).join('')}</div>`;
   }
   function lb(i) {
     cur = i; const c = C[i], L = list(), p = L.indexOf(i);
