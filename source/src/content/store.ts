@@ -31,6 +31,8 @@ export function docCommands(getFs: () => DirNode): Command[] {
       if (ctx.tty) ctx.switchPage(name);
       const r = resolve(getFs(), [], path);
       if (r?.node.type === 'file') ctx.print(r.node.content);
+      // Projects: the text list stays in the terminal and the visual showcase opens on top (esc returns to the list).
+      if (name === 'projects' && ctx.tty) ctx.openShowcase?.();
     },
   }));
 }

@@ -30,7 +30,7 @@ export const github = external('github', 'Open GitHub profile');
 export const scholar = external('scholar', 'Open Google Scholar');
 
 /** Commands that must not auto-run from a shared link (popups, clipboard, state changes). */
-export const NO_DEEPLINK = new Set(['github', 'scholar', 'email', 'exit', 'clear', 'theme', 'share', 'history', 'paper']);
+export const NO_DEEPLINK = new Set(['github', 'scholar', 'email', 'exit', 'clear', 'theme', 'share', 'history', 'paper', 'showcase']);
 
 export const share: Command = {
   name: 'share', desc: 'Copy a link to this page or a command', group: 'Navigation',
@@ -39,6 +39,15 @@ export const share: Command = {
     const url = `${location.origin}${location.pathname}${what ? `#${encodeURIComponent(what)}` : ''}`;
     ctx.print(url, 'link');
     void ctx.copy(url).then((ok) => ok && ctx.print('link copied ✓', 'muted'));
+  },
+};
+
+export const showcase: Command = {
+  name: 'showcase', desc: 'Open the projects showcase (showcase 4 = project 4)', group: 'Navigation',
+  run([n], ctx) {
+    const i = n == null ? undefined : Number.parseInt(n, 10) - 1;
+    if (!ctx.openShowcase || (i !== undefined && Number.isNaN(i)) || !ctx.openShowcase(i)) return ctx.print(`showcase: no project ${n} · try projects`, 'error');
+    ctx.print('Opening showcase… (esc to close)', 'muted');
   },
 };
 

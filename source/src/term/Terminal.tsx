@@ -170,6 +170,7 @@ export function Terminal() {
       copy: copyText,
       suggest: setFixLine,
       openCV: () => (window as unknown as { __openCV?: () => void }).__openCV?.(),
+      openShowcase: (i) => (window as unknown as { __openShowcase?: (i?: number) => boolean }).__openShowcase?.(i) ?? false,
       openPaper: (i) => (window as unknown as { __openPaper?: (i: number) => boolean }).__openPaper?.(i) ?? false,
     };
     runLine(line, shell.reg, ctx, shell.phrases);

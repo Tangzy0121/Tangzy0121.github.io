@@ -12,7 +12,7 @@ export function createShell(): { reg: Registry; fs: DirNode; phrases: Record<str
   const reg = createRegistry();
   let root: DirNode | null = null;
   for (const c of docCommands(() => root!)) reg.register(c);
-  for (const c of [site.cv, site.paper, site.email, site.github, site.scholar, site.share]) reg.register(c);
+  for (const c of [site.cv, site.paper, site.showcase, site.email, site.github, site.scholar, site.share]) reg.register(c);
   for (const c of [fs.ls, fs.ll, fs.cd, fs.pwd, fs.tree, fs.cat]) reg.register(c);
   for (const c of [text.grep, text.find, text.wc, text.head, text.tail, text.more, text.less]) reg.register(c);
   for (const c of [sh.whoami, sh.history, sh.clear, sh.home, sh.exit, sh.echo, sh.theme, sh.neofetch, sh.help(reg)]) reg.register(c);

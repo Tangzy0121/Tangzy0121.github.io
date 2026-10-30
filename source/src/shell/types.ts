@@ -40,6 +40,8 @@ export interface Context {
   openCV(): void;
   /** Open paper #i (0-based) in the PDF gallery; false if there is no such paper. */
   openPaper?(i: number): boolean;
+  /** Open the projects showcase (gallery, or project #i detail, 0-based); false if no such project. */
+  openShowcase?(i?: number): boolean;
   /** Offer a corrected command line for the next prompt (Tab/→ accepts). */
   suggest?(line: string): void;
 }
