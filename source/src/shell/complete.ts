@@ -5,8 +5,10 @@
 //  - paths complete per-segment; `cd` completes directories only
 import type { DirNode } from './types';
 import { resolve } from './vfs';
+import { didYouMean } from './fuzzy';
 
-export type Completion = { next?: string; candidates?: string[] };
+/** `fix` marks a typo correction rather than a completion of what was typed. */
+export type Completion = { next?: string; candidates?: string[]; fix?: boolean };
 
 export function commonPrefix(words: string[]): string {
   if (words.length === 0) return '';
@@ -39,7 +41,12 @@ export function complete(line: string, words: string[], phrases: string[], root:
     const heads = new Set(phrases.map((p) => p.split(' ')[0]));
     const pool = idx === 0 ? [...new Set([...words.filter((w) => !heads.has(w)), ...phrases])] : phraseHits;
     const m = pick(pool, q, idx === 0);
-    if (m.length === 0) return {};
+    if (m.length === 0) {
+      // Nothing starts with or contains it: try typo correction ("xi" → exit, "tixe" → exit).
+      const fix = idx === 0 ? didYouMean(q, pool) : [];
+      if (fix.length === 0) return {};
+      return { next: `${fix[0]} `, fix: true, candidates: fix.length > 1 ? fix : undefined };
+    }
     if (m.length === 1) return { next: `${m[0]} ` };
     const lcp = commonPrefix(m);
     return lcp.length > q.length && lcp.startsWith(q) ? { next: lcp, candidates: m } : { candidates: m };
@@ -70,5 +77,8 @@ export function complete(line: string, words: string[], phrases: string[], root:
 export function ghost(line: string, words: string[], phrases: string[], root: DirNode, cwd: string[]): string {
   if (!line.trim() || /\s$/.test(line)) return '';
   const c = complete(line, words, phrases, root, cwd);
-  return c.next && c.next.toLowerCase().startsWith(line.toLowerCase()) ? c.next.slice(line.length).trimEnd() : '';
+  if (!c.next) return '';
+  // Extends what was typed: show the rest inline. Otherwise (substring or typo): "→ exit?".
+  if (c.next.toLowerCase().startsWith(line.toLowerCase())) return c.next.slice(line.length).trimEnd();
+  return `  → ${c.next.trim()}?`;
 }

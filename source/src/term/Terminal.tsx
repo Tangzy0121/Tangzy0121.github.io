@@ -45,6 +45,8 @@ export function Terminal() {
   const [caret, setCaret] = useState({ v: '', p: 0 });
   const [histIdx, setHistIdx] = useState<number | null>(null);
   const [pager, setPager] = useState<string[] | null>(null);
+  /** Corrected line offered after `command not found` (zsh-style); Tab/→ on the empty prompt accepts. */
+  const [fixLine, setFixLine] = useState<string | null>(null);
   const [pct, setPct] = useState(100);
   const [theme, setThemeState] = useState<'light' | 'dark'>(() => {
     try { return localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light'; } catch { return 'light'; }
@@ -122,6 +124,7 @@ export function Terminal() {
   const run = useCallback((raw: string) => {
     const line = raw.trim();
     push({ type: 'command', path: pathString(cwd), text: line });
+    setFixLine(null);
     if (!line) return;
     document.title = `~${profile.handle}: ${line}`;
     history.current.push(line);
@@ -130,6 +133,7 @@ export function Terminal() {
       page: setPager, history: history.current, theme, setTheme: setThemeState, cols: cols.current, rows: rows.current, tty: true,
       openUrl: (u) => window.open(u, '_blank', 'noopener'),
       copy: copyText,
+      suggest: setFixLine,
       openCV: () => (window as unknown as { __openCV?: () => void }).__openCV?.(),
     };
     runLine(line, shell.reg, ctx, shell.phrases);
@@ -208,6 +212,7 @@ export function Terminal() {
   }, []);
 
   const tab = () => {
+    if (input === '' && fixLine) { setInput(`${fixLine} `); setFixLine(null); return; }
     const c = complete(input, words, phrases, shell.fs, cwd);
     if (c.candidates?.length) push({ type: 'command', path: pathString(cwd), text: input }, { type: 'output', text: c.candidates.join('  '), kind: 'muted' });
     if (c.next !== undefined) setInput(c.next);
@@ -226,6 +231,8 @@ export function Terminal() {
       if (histIdx === null) return;
       const i = histIdx + 1;
       if (i >= h.length) { setHistIdx(null); setInput(''); } else { setHistIdx(i); setInput(h[i]); }
+    } else if (e.key === 'ArrowRight' && input === '' && fixLine) {
+      e.preventDefault(); setInput(`${fixLine} `); setFixLine(null);
     } else if (e.key === 'ArrowRight' && (el.selectionStart ?? 0) >= input.length) {
       const g = ghost(input, words, phrases, shell.fs, cwd);
       if (g) { e.preventDefault(); setInput(complete(input, words, phrases, shell.fs, cwd).next!); }
@@ -250,7 +257,7 @@ export function Terminal() {
 
   const pos = caret.v === input ? Math.min(caret.p, input.length) : input.length;
   const under = input.slice(pos, pos + 1);
-  const hint = pos === input.length ? ghost(input, words, phrases, shell.fs, cwd) : '';
+  const hint = input === '' && fixLine ? fixLine : pos === input.length ? ghost(input, words, phrases, shell.fs, cwd) : '';
   const onCaret = (el: HTMLInputElement) => setCaret({ v: el.value, p: el.selectionStart ?? el.value.length });
 
   return (

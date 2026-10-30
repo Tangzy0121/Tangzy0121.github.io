@@ -81,3 +81,28 @@ test('content: no dead links in docs', () => {
   walk(fs);
   assert.ok(!all.some((t) => /\]\(#\)/.test(t)));
 });
+
+test('typo correction: dropped letters, swaps, anagrams; no noise', async () => {
+  const { didYouMean } = await import('./fuzzy');
+  const W = [...words, ...ph];
+  assert.equal(didYouMean('xi', W)[0], 'exit');
+  assert.equal(didYouMean('exti', W)[0], 'exit');
+  assert.equal(didYouMean('tixe', W)[0], 'exit');
+  assert.equal(didYouMean('scholr', W)[0], 'scholar');
+  assert.equal(didYouMean('gtihub', W)[0], 'github');
+  assert.equal(didYouMean('hlep', W)[0], 'help');
+  assert.equal(didYouMean('projcets', W)[0], 'projects');
+  assert.equal(didYouMean('googel scholar', W)[0], 'google scholar');
+  assert.deepEqual(didYouMean('q', W), []);
+  assert.deepEqual(didYouMean('zzzz', W), []);
+  assert.equal(c('xi').next, 'exit ');
+  assert.equal(c('tixe').fix, true);
+  assert.equal(c('tixe').next, 'exit ');
+  assert.equal(ghost('xi', words, ph, fs, []), '  → exit?');
+  const o: string[] = []; let s = '';
+  runLine('xi', reg, fakeCtx(o, { suggest: (l) => void (s = l) }), phrases);
+  assert.equal(s, 'exit');
+  assert.match(o[1], /you could try: `exit`/);
+  runLine('cat bio | grpe -i safety', reg, fakeCtx(o, { suggest: (l) => void (s = l) }), phrases);
+  assert.equal(s, 'cat bio | grep -i safety');
+});

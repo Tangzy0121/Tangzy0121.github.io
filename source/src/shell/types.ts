@@ -32,6 +32,8 @@ export interface Context {
   openUrl(url: string): void;
   copy(text: string): Promise<boolean>;
   openCV(): void;
+  /** Offer a corrected command line for the next prompt (Tab/→ accepts). */
+  suggest?(line: string): void;
 }
 
 export interface Command {
