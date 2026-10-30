@@ -111,26 +111,31 @@ Select a paper: read opens the PDF viewer (esc to close), download saves the PDF
    Manuscript under review · anonymized version.
    [▣ read](cmd:paper 1) · [⤓ download PDF](./papers/asimov-cascade-anon.pdf)`},research:{"README.md":`# Research
 
-Research projects: [Asimov Cascade](cmd:cat ~/research/asimov-cascade/README.md) (ICRA 2027 · Under Review) · [SafeCE](cmd:cat ~/research/safece/README.md) (In preparation) · [Anyscale-DBCO](cmd:cat ~/research/anyscale-dbco/README.md) (Ongoing) · papers: [papers](cmd:papers)
+## Summary
+I care about one question: how to make intelligent systems reliable and scalable enough to trust in practice.
+I pursue it across four areas: database systems, machine learning for combinatorial optimization (ML4CO), AI safety, and scientific machine learning.
+In databases I study learned components and their failure modes, especially cardinality estimation. In ML4CO I scale solving through decomposition and solver routing. In AI safety I study how failures cascade across interacting robotic subsystems. In scientific ML I am interested in operator learning (PINNs, DeepONet, FNO) as fast, differentiable surrogates.
 
-01  Database Systems
-    I study how learned components change query processing, with an emphasis on cardinality estimation and its failure modes. The direction covers risk-aware evaluation, upper-tail calibration, and robust query optimization.
-    Topics: SafeCE, Cardinality Estimation, Query Optimization
-    Project: [SafeCE](cmd:cat ~/research/safece/README.md)
+## Research topics
 
-02  ML for Combinatorial Optimization
-    I work on scaling combinatorial optimization for database problems through decomposition and solver routing. The focus is on reliable pipelines that combine exact, heuristic, and learned solvers instead of replacing them.
-    Topics: Scaling, Decomposition, Solver Routing
-    Project: [Anyscale-DBCO](cmd:cat ~/research/anyscale-dbco/README.md)
+01  [Asimov Cascade](cmd:cat ~/research/asimov-cascade/README.md)
+    AI Safety · Robotics · System Safety
+    Detecting cascading safety failures across interacting humanoid robotic subsystems.
+    Status: ICRA 2027 · Under Review · anonymous PDF in [papers](cmd:papers)
 
-03  AI Safety & Robotics
-    I study how safety failures propagate in systems of interacting agents and robotic subsystems. The work combines cascade modeling, large-scale simulation, and early-warning detection of system-level incidents.
-    Topics: Asimov Cascade, Agent Safety
-    Project: [Asimov Cascade](cmd:cat ~/research/asimov-cascade/README.md)
+02  [SafeCE](cmd:cat ~/research/safece/README.md)
+    Database Systems · Cardinality Estimation · Risk Calibration
+    Risk-aware evaluation and upper-tail calibration for cardinality estimation.
+    Status: In preparation
 
-04  Scientific Machine Learning
-    I am interested in operator learning and physics-informed models for scientific computing. This includes neural operators and their use as fast, differentiable surrogates inside simulation and optimization pipelines.
-    Topics: PINNs, DeepONet, FNO, Operator Learning`,"anyscale-dbco":{"README.md":`# Anyscale-DBCO
+03  [Anyscale-DBCO](cmd:cat ~/research/anyscale-dbco/README.md)
+    ML4CO · Database Systems · Combinatorial Optimization
+    Scaling combinatorial optimization through decomposition, solver routing and composition.
+    Status: Ongoing
+
+## Papers
+Papers from these topics, published or under review, are collected in the papers gallery.
+→ [▣ open papers](cmd:papers)`,"anyscale-dbco":{"README.md":`# Anyscale-DBCO
 
 ML4CO · Database Systems · Combinatorial Optimization
 Status: Ongoing
