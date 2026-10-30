@@ -1,13 +1,7 @@
 # Awards
 
-## Selected honors
-- 2026 :: MCM · Honorable Mention
-- 2025 :: HIT People's Scholarship (人民奖学金) · Second Class · Autumn 2025 / Spring 2025
-- 2024 :: HIT People's Scholarship (人民奖学金) · Third Class · Autumn 2024
-- 2025 :: National College Students 5-Minute Research Presentation (5MRP) · Grand Prize
-
 ## Certificates
->> All 26 certificates · text list below · [▦ open certificate hall](cmd:certs) for thumbnails and full-size view (esc to close)
+>> 26 certificates · newest first · [▦ open certificate hall](cmd:certs) for thumbnails and full-size view (esc to close)
 
 [01]  [哈工大经济与管理学院 · “最美笔记”](cmd:certs 1)
      2026.05 · 荣誉称号
