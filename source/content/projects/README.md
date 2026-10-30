@@ -2,7 +2,8 @@
 
 [▦ open showcase](cmd:showcase) · visual cards with demos (esc to close)
 
-Career-facing personal projects. Research work lives in [research](cmd:research).
+## Personal projects
+>> Career-facing engineering work: apps, agents and tools I build and ship. Research lives in [research](cmd:research).
 
 [01]  [Folio](https://github.com/Tangzy0121/Folio)  [▦ demo](cmd:showcase 1)
      Android / Kotlin

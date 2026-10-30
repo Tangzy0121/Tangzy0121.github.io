@@ -7,11 +7,14 @@ I am an undergraduate researcher at Harbin Institute of Technology. My work span
 
 Currently I work on risk-aware cardinality estimation (SafeCE), decomposition-based combinatorial optimization for database problems (Anyscale-DBCO), and cascading safety failures in humanoid robotic systems (Asimov Cascade).
 
+## Guiding question
+>> How do we make intelligent systems reliable and scalable enough to trust in practice?
+
 ## Interests
-- Database Systems
-- ML4CO
-- AI Safety
-- Scientific ML
+- Database Systems :: learned components and their failure modes, especially cardinality estimation
+- ML4CO :: scaling combinatorial optimization through decomposition and solver routing
+- AI Safety :: how failures cascade across interacting robotic subsystems
+- Scientific ML :: operator learning (PINNs, DeepONet, FNO) as fast, differentiable surrogates
 
 ## Links
 - [GitHub](https://github.com/tangzy0121)

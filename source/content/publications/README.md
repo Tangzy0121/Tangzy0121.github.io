@@ -1,6 +1,7 @@
 # Publications
 
-Select a paper: read opens the PDF viewer (esc to close), download saves the PDF.
+## Under review
+>> Select a paper: read opens the PDF viewer (esc to close), download saves the PDF.
 
 1. Asimov Cascade Monitoring in Humanoid Robotics: An Evidence-Gated Technology Management Framework with Quantification
    Anonymous submission (double-blind review copy)

@@ -19,7 +19,7 @@
 #scv button,#scv a.b{font:inherit;font-size:13px;color:var(--link);background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer;text-decoration:none}
 #scv button:hover,#scv a.b:hover,#scv button:focus-visible,#scv .card:focus-visible{border-color:var(--link);outline:none}
 #scv .body{flex:1;overflow:auto;padding:18px}
-#scv h3{font-size:13px;color:var(--muted);font-weight:400;margin:4px 0 10px}
+#scv h3{font-size:13px;color:var(--path);font-weight:600;letter-spacing:.03em;margin:8px 0 12px;padding-left:9px;border-left:3px solid var(--link)}#scv h3 code{font-weight:400;color:var(--muted)}
 #scv .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-bottom:22px}
 #scv .card{text-align:left;padding:0;display:flex;flex-direction:column;overflow:hidden;color:var(--text);border-radius:8px}
 #scv .card .th{height:140px;background:color-mix(in srgb,var(--border) 35%,transparent);display:flex;align-items:center;justify-content:center;gap:4px;overflow:hidden}
