@@ -54,5 +54,7 @@ export interface Command {
   doc?: boolean;
   /** Hidden from help and /bin (e.g. aliases). */
   hidden?: boolean;
+  /** Offer a hidden command in completion without adding it to help or /bin. */
+  completable?: boolean;
   run(argv: string[], ctx: Context): void;
 }

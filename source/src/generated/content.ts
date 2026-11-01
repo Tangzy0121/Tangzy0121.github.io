@@ -48,7 +48,7 @@ export const profile = {
   "phrases": {
     "google scholar": "scholar"
   },
-  "lastUpdate": "2026-10-30"
+  "lastUpdate": "2026-11-01"
 } as const;
 export const tree: Record<string, unknown> = {
   "about.md": "# About\n\nTang Zhengyu / 唐政宇\nUndergraduate Researcher, Harbin Institute of Technology\n\nI am an undergraduate researcher at Harbin Institute of Technology. My work spans database systems, machine learning for combinatorial optimization, AI safety, and scientific machine learning. Across these areas I care about one question: how to make intelligent systems reliable and scalable enough to trust in practice.\n\nCurrently I work on risk-aware cardinality estimation (SafeCE), decomposition-based combinatorial optimization for database problems (Anyscale-DBCO), and cascading safety failures in humanoid robotic systems (Asimov Cascade).\n\n## Guiding question\n>> How do we make intelligent systems reliable and scalable enough to trust in practice?\n\n## Interests\n- Database Systems :: learned components and their failure modes, especially cardinality estimation\n- ML4CO :: scaling combinatorial optimization through decomposition and solver routing\n- AI Safety :: how failures cascade across interacting robotic subsystems\n- Scientific ML :: operator learning (PINNs, DeepONet, FNO) as fast, differentiable surrogates\n\n## Links\n- [GitHub](https://github.com/tangzy0121)\n- [Google Scholar](https://scholar.google.com/citations?user=SQIsoDwAAAAJ)\n- [Email](mailto:tangzy0121@gmail.com)",

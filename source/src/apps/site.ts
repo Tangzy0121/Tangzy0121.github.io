@@ -29,9 +29,9 @@ function external(name: 'github' | 'scholar', desc: string): Command {
 export const github = external('github', 'Open GitHub profile');
 export const scholar = external('scholar', 'Open Google Scholar');
 
-/** A typed-only doorway to the visual portfolio. */
+/** A discoverable Easter egg, kept out of the ordinary help and navigation. */
 export const personalHomepage: Command = {
-  name: 'tangzy0121', desc: 'Open Tangzy’s personal homepage', group: 'Navigation', hidden: true,
+  name: 'tangzy0121', desc: 'Open Tangzy’s personal homepage', group: 'Navigation', hidden: true, completable: true,
   run(_args, ctx) {
     ctx.print('Found it ♥ Opening Tangzy’s personal homepage…', 'success');
     ctx.openUrl('https://tangzy0121.github.io/Tangzy0121/');
