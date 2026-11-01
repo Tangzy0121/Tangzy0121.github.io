@@ -29,8 +29,17 @@ function external(name: 'github' | 'scholar', desc: string): Command {
 export const github = external('github', 'Open GitHub profile');
 export const scholar = external('scholar', 'Open Google Scholar');
 
+/** A typed-only doorway to the visual portfolio. */
+export const personalHomepage: Command = {
+  name: 'tangzy0121', desc: 'Open Tangzy’s personal homepage', group: 'Navigation', hidden: true,
+  run(_args, ctx) {
+    ctx.print('Found it ♥ Opening Tangzy’s personal homepage…', 'success');
+    ctx.openUrl('https://tangzy0121.github.io/Tangzy0121/');
+  },
+};
+
 /** Commands that must not auto-run from a shared link (popups, clipboard, state changes). */
-export const NO_DEEPLINK = new Set(['github', 'scholar', 'email', 'exit', 'clear', 'theme', 'share', 'history', 'paper', 'showcase', 'certs']);
+export const NO_DEEPLINK = new Set(['github', 'scholar', 'email', 'exit', 'clear', 'theme', 'share', 'history', 'paper', 'showcase', 'certs', 'tangzy0121']);
 
 export const share: Command = {
   name: 'share', desc: 'Copy a link to this page or a command', group: 'Navigation',

@@ -7,7 +7,7 @@ export interface Registry {
   get(name: string): Command | undefined;
   /** Primary (non-hidden) commands. */
   list(): Command[];
-  /** Every completable word: commands + aliases. */
+  /** Discoverable commands and aliases; hidden commands remain typed-only. */
   names(): string[];
   aliasesOf(name: string): string[];
 }
@@ -23,7 +23,11 @@ export function createRegistry(): Registry {
       return cmds.get(n) ?? cmds.get(aliases.get(n) ?? '');
     },
     list() { return [...cmds.values()].filter((c) => !c.hidden); },
-    names() { return [...new Set([...cmds.keys(), ...aliases.keys()])].sort(); },
+    names() {
+      const visible = [...cmds].filter(([, c]) => !c.hidden).map(([name]) => name);
+      const visibleAliases = [...aliases].filter(([, target]) => !cmds.get(target)?.hidden).map(([name]) => name);
+      return [...new Set([...visible, ...visibleAliases])].sort();
+    },
     aliasesOf(name) { return [...aliases].filter(([, t]) => t === name).map(([a]) => a); },
   };
 }
